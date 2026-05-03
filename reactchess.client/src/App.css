@@ -1,0 +1,273 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+    color: #888;
+}
+
+
+
+.input-default
+{
+    border: 1px solid #ccc;
+    padding: 8px;
+    transition: border-color 0.3s;
+}
+.input-error {
+    border-color: red !important;
+    background-color: #fff1f1;
+}
+.row {
+    display: flex;
+}
+.board{
+    font-size: 0px;
+}
+.square-white {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-color: #f0d9b5;
+    align-content: center
+}
+.square-black {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-color: #b58863;
+    align-content: center
+}
+.target {
+    outline: 10px solid #0c0;
+    outline-offset: -10px;
+}
+.checked {
+    outline: 10px solid #c30;
+    outline-offset: -10px;
+}
+.piece-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: fill; 
+    display: block;
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7); /* Затемнение */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* Чтобы быть выше всех */
+}
+.modal {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 300px;
+    color: black; /* На случай, если основной текст в приложении светлый */
+    text-align: center;
+}
+.fixed-container {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+.game-option {
+    width: 200px;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px
+}
+.small-table-right {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: auto;
+    max-width: 400px;
+    min-width: 200px;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.small-table-right td,
+.small-table-right th {
+    padding: 10px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+.small-table-right tr:last-child td {
+    border-bottom: none;
+}
+
+/* Для заголовков, если используете <th> */
+.small-table-right th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Чередование строк (опционально) */
+.small-table-right tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* Эффект при наведении */
+.small-table-right tr:hover {
+    background-color: #f0f0f0;
+    transition: background-color 0.2s ease;
+}
+
+/* Первая колонка (опционально) */
+.small-table-right td:first-child,
+.small-table-right th:first-child {
+    font-weight: 500;
+    color: #555;
+}
+
+/* Вторая колонка */
+.small-table-right td:last-child,
+.small-table-right th:last-child {
+    color: #222;
+}
+.chess-timer {
+    position: fixed;
+    right: 20px;
+    font-size: 72px;
+    top: 75%;
+    transform: translateY(-50%);
+    /* Размеры и отступы */
+    width: 200px;
+    padding: 20px;
+    /* Оформление */
+    background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    /* Анимация */
+    transition: all 0.3s ease;
+    /* Текст */
+    font-family: 'Courier New', 'Monaco', monospace;
+    text-align: center;
+    color: #ecf0f1;
+}
+.chess-opponent-timer {
+    position: fixed;
+    right: 20px;
+    font-size: 72px;
+    top: 50%;
+    transform: translateY(-50%);
+    /* Размеры и отступы */
+    width: 200px;
+    padding: 20px;
+    /* Оформление */
+    background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    /* Анимация */
+    transition: all 0.3s ease;
+    /* Текст */
+    font-family: 'Courier New', 'Monaco', monospace;
+    text-align: center;
+    color: #ecf0f1;
+}
+
+/* Стили для времени внутри таймера */
+.time-display {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    font-family: monospace;
+}
+
+/* Активный игрок */
+.chess-timer.active {
+    background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+    box-shadow: 0 0 20px rgba(39, 174, 96, 0.5);
+    animation: pulse 1s infinite;
+}
+
+/* Анимация пульсации для активного таймера */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(39, 174, 96, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(39, 174, 96, 0);
+    }
+}
+
+/* Предупреждение о заканчивающемся времени */
+.chess-timer.warning {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    animation: blink 0.5s infinite;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+
+

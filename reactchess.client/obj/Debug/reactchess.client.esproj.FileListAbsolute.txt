@@ -1,0 +1,1 @@
+C:\Users\user\source\repos\ReactChess\reactchess.client\obj\Debug\reactchess.client.esproj.CoreCompileInputs.cache
