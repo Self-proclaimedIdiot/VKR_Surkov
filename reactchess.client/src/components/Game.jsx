@@ -25,6 +25,20 @@ class Piece {
     GetColorMultiplier() {
         return this.color == 'w' ? -1 : 1
     }
+    GetCost() {
+        switch (this.type) {
+            case 'p':
+                return 1
+            case 'n':
+                return 3
+            case 'b':
+                return 3
+            case 'r':
+                return 5
+            case 'q':
+                return 9
+        }
+    }
 }
 class ChessBoard {
     constructor() {
@@ -282,6 +296,80 @@ class ChessBoard {
                     pieces.push([this.board[i][j], i, j])
         return pieces
     }
+    GetAllMissings() {
+        const whites = this.GetAllColorPieces('w')
+        const blacks = this.GetAllColorPieces('b')
+        let pawns = [0, 0]
+        let knights = [0, 0]
+        let bishops = [0, 0]
+        let rooks = [0, 0]
+        let queens = [0, 0]
+        whites.map((piece) => {
+            switch (piece[0].type) {
+                case 'p':
+                    pawns[0]++
+                    break
+                case 'n':
+                    knights[0]++
+                    break
+                case 'b':
+                    bishops[0]++
+                    break
+                case 'r':
+                    rooks[0]++
+                    break
+                case 'q':
+                    queens[0]++
+                    break
+            }
+        });
+        blacks.map((piece) => {
+            switch (piece[0].type) {
+                case 'p':
+                    pawns[1]++
+                    break
+                case 'n':
+                    knights[1]++
+                    break
+                case 'b':
+                    bishops[1]++
+                    break
+                case 'r':
+                    rooks[1]++
+                    break
+                case 'q':
+                    queens[1]++
+                    break
+            }
+        });
+        let missings = []
+        const missing_pawns = [8 - pawns[0], 8 - pawns[1]]
+        const missing_knights = [2 - knights[0], 2 - knights[1]]
+        const missing_bishops = [2 - bishops[0], 2 - bishops[1]]
+        const missing_rooks = [2 - rooks[0], 2 - rooks[1]]
+        const missing_queens = [1 - queens[0], 1 - queens[1]]
+        for (let i = 0; i < missing_pawns[0]; i++)
+            missings.push(new Piece('p', 'w', false))
+        for (let i = 0; i < missing_knights[0]; i++)
+            missings.push(new Piece('n', 'w', false))
+        for (let i = 0; i < missing_bishops[0]; i++)
+            missings.push(new Piece('b', 'w', false))
+        for (let i = 0; i < missing_rooks[0]; i++)
+            missings.push(new Piece('r', 'w', false))
+        for (let i = 0; i < missing_queens[0]; i++)
+            missings.push(new Piece('q', 'w', false))
+        for (let i = 0; i < missing_pawns[1]; i++)
+            missings.push(new Piece('p', 'b', false))
+        for (let i = 0; i < missing_knights[1]; i++)
+            missings.push(new Piece('n', 'b', false))
+        for (let i = 0; i < missing_bishops[1]; i++)
+            missings.push(new Piece('b', 'b', false))
+        for (let i = 0; i < missing_rooks[1]; i++)
+            missings.push(new Piece('r', 'b', false))
+        for (let i = 0; i < missing_queens[1]; i++)
+            missings.push(new Piece('q', 'b', false))
+        return missings
+     }
     GetMoves(piece, loc, withKingRisks){
         let moves = []
             switch (piece.type) {

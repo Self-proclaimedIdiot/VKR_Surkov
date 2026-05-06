@@ -4,6 +4,8 @@ import GameOverModal from '../components/GameOverModal.jsx'
 import TrasformationModal from '../components/TransformationModal.jsx'
 import ConfirmButton from './ConfirmButton.jsx';
 import { toast, Toaster } from 'sonner';
+import useBeforeUnload from '../components/BeforeUnload.jsx'
+import WarningForm from './WarningForm.jsx';
 const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
     const [draggedFigure, setDraggedFigure] = useState({ piece: null, loc: [] })
     const [boardHash, setBoardHash] = useState(0);
@@ -25,7 +27,19 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
     const [opponentEnding, setOpponentEnding] = useState(Math.floor(Date.now() / 1000) + baseTime)
     const [pingCompensation, setPingCompensation] = useState(0)
     const [opponentPingCompensation, setOpponentPingCompensation] = useState(0)
+    const [missingPieces, setMissingPieces] = useState([])
+    const [opponentMissingPieces, setOpponentMissingPieces] = useState([])
+    const [advantage, setAdvantage] = useState(0)
+    const [isDirty, setIsDirty] = useState(true)
+    const [playerLogin, setPlayerLogin] = useState("")
+    const [opponentLogin, setOpponentLogin] = useState("")
+    const [playerElo, setPlayerElo] = useState(0)
+    const [opponentElo, setOpponentElo] = useState(0)
+    const [playerTitle, setPlayerTitle] = useState("")
+    const [opponentTitle, setOpponentTitle] = useState("")
     const [dl, setDl] = useState(0)
+    dl
+    useBeforeUnload(isDirty)
     const game = useMemo(() => {
         const instance = new ChessBoard()
         instance.ReadFromFEN('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
@@ -37,6 +51,25 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
             setMoves(game.GetMoves(data.piece, data.loc, true))
             e.target.style.opacity = '1.0';
         }
+    }
+    const CheckForMissings = () => {
+        const missings = game.GetAllMissings()
+        let player_missings = []
+        let opponent_missings = []
+        let counted_advantage = 0
+        missings.map(piece => {
+            if (piece.color == 'w' && isWhite || piece.color == 'b' && !isWhite) {
+                player_missings.push(piece)
+                counted_advantage -= piece.GetCost()
+            }
+            else {
+                opponent_missings.push(piece)
+                counted_advantage += piece.GetCost()
+            }
+        })
+        setMissingPieces(player_missings)
+        setOpponentMissingPieces(opponent_missings)
+        setAdvantage(counted_advantage)
     }
     const RegisterMove = (piece, loc, dest) => {
         //setMessage(figure?.type + " " + loc + " to " + dest + " " + boardHash)
@@ -68,6 +101,7 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
                 const FEN = game.WriteToFEN()
                 setMoveHistory(prev => [...prev, [newMove, FEN]])
                 setStatus(response + (isWhite ? " White" : " Black"))
+                CheckForMissings()
                 connection.invoke("SendMove", gameId, FEN, response +
                     (isWhite ? " White" : " Black"))
             }
@@ -156,6 +190,24 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
         return Math.floor(Date.now() + Number(offset))
     }
     useEffect(() => {
+        fetch('game/load-players-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({IsWhite: isWhite, GameId: gameId})
+        })
+            .then(response => response.json())
+            .then(data => {
+                setPlayerLogin(data.login)
+                setPlayerElo(data.elo)
+                setPlayerTitle(data.title)
+                setOpponentLogin(data.opponentLogin)
+                setOpponentElo(data.opponentElo)
+                setOpponentTitle(data.opponentTitle)
+            })
+    }, [])
+    useEffect(() => {
         let interval = null;
 
         // Переводим всё в одну систему (мс) для расчетов
@@ -220,6 +272,10 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
         return () => clearInterval(interval);
     }, [isOpponentActive, opponentEnding]); // seconds здесь нет — и это победа
     useEffect(() => {
+        if (isModalOpen)
+            setIsDirty(false)
+    }, [isModalOpen])
+    useEffect(() => {
         const handleMoveReceived = (data) => {
             if (data.status == "MoveBack") {
                 let moveIndex = -1
@@ -245,6 +301,7 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
             if (data.moveNote != undefined)
                 setMoveHistory(prev => [...prev, [(data.moveNote) + (data.status.split(' ')[0] == 'Check' ? "+" : ""), data.fen]])
             console.log(moveHistory[0])
+            CheckForMissings()
             setIsModalOpen(data.gameOver)
             if (data.gameOver)
                 setModalData(data.gameOverData)
@@ -319,6 +376,21 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
     }, [connection, game, moveHistory])
     return (
         <div>
+            <div className="player-card">
+                <span className="player-login">{opponentLogin}</span>
+                <span className="player-elo">{"(" + opponentElo + ")"}</span>
+                {opponentTitle != null && <span>{opponentTitle}</span>}
+            </div>
+            <div className="eaten-pieces-container">
+                {missingPieces.map(piece => {
+                    return (
+                        <span key={missingPieces.indexOf(piece)}>
+                            <img src={'/pieces/' + piece.getSprite()} />
+                        </span>
+                    )
+                })}
+                {advantage < 0 && (<p>+{-advantage}</p>)}
+            </div>
             {log}
             <table className="small-table-right">
                 <thead>
@@ -327,6 +399,7 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
                         <th>Черные</th>
                     </tr>
                 </thead>
+                <tbody>
                     {
                         moveHistory.map((move,moveIndex) => {
                             const index = moveHistory.indexOf(move)
@@ -347,6 +420,7 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
                             }
                         })
                     }
+                </tbody>
             </table>
             <Toaster position="top-right" richColors closeButton />
             <div className="board" key={boardHash}>
@@ -368,6 +442,22 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
             <ConfirmButton onConfirm={() => Draw()} title="Предложить ничью" />
                 <ConfirmButton onConfirm={() => MoveBack()} title="Вернуть ход" />
             </div>
+            <div className="eaten-pieces-container">
+                {opponentMissingPieces.map(piece => {
+                    return(
+                        <span key={opponentMissingPieces.indexOf(piece)}>
+                            <img src={'/pieces/' + piece.getSprite()} />
+                        </span>
+                    )
+                })}
+                {advantage > 0 && (<p>+{advantage}</p>)}
+            </div>
+            <div className="player-card">
+                <span className="player-login">{playerLogin}</span>
+                <span className="player-elo">{"(" + playerElo + ")"}</span>
+                {playerTitle != null && <span>{playerTitle}</span>}
+            </div>
+            <WarningForm isDirty={isDirty}></WarningForm>
             <GameOverModal isOpen={isModalOpen}
                 message={modalData.message}
                 new_elo={modalData.new_elo}

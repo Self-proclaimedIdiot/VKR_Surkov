@@ -62,6 +62,14 @@ export default defineConfig({
             '^/regplay': {
                 target,
                 secure: false
+            },
+            '^/game': {
+                target,
+                secure: false
+            },
+            '^/user-profile': {
+                target,
+                secure: false
             }
         },
         port: 5173,

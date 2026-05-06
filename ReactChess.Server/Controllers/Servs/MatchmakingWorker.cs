@@ -10,6 +10,7 @@ namespace ReactChess.Server.Controllers.Servs
         private readonly IHubContext<ChessHub> _hubContext;
         private readonly ChessContext _context = new ChessContext(new DbContextOptions<ChessContext>());
         private readonly Dictionary<string, List<SearchRequest>> _waitingRooms = new();
+        private readonly ConnectionsLog connectionsLog = new ConnectionsLog();
         public MatchmakingWorker(MatchmakingChannel pool, IHubContext<ChessHub> hubContext)
         {
             _pool = pool;
@@ -96,6 +97,8 @@ namespace ReactChess.Server.Controllers.Servs
             var gameId = game?.Id.ToString();
             await _hubContext.Groups.AddToGroupAsync(p1.ConnectionId, gameId);
             await _hubContext.Groups.AddToGroupAsync(p2.ConnectionId, gameId);
+            await connectionsLog.AddLog(p1.ConnectionId, gameId);
+            await connectionsLog.AddLog(p2.ConnectionId, gameId);
             await _hubContext.Clients.Group(gameId).SendAsync("GameStarted", new
             {
                 GameId = gameId,

@@ -1,10 +1,16 @@
 ﻿import React from 'react';
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import {
+    createBrowserRouter,
+    RouterProvider,
+    Link,
+    Outlet
+} from 'react-router-dom';
 import Register from './pages/Register.jsx'
 import Login from './pages/Login.jsx'
 import RegularPlay from './pages/RegularPlay.jsx';
+import UserProfile from './pages/UserProfile.jsx';
 
 // Заглушки страниц прямо здесь
 const Home = () => <h1>Main</h1>;
@@ -35,26 +41,67 @@ function App() {
             .then(data => SetMessage(data.message + "\n Ты в системе, " + decoded.unique_name))
             .then(() => setIsHidden(false))
     }, [])
-    return (
-        <Router>
-            <p>{message}</p>
-            <nav style={{ padding: '20px', background: '#eee' }}>
-                <Link to="/" style={{ marginRight: '30px' }}>Home</Link>
-                <Link to="/register" style={{ marginRight: '20px' }}>Register</Link>
-                {!isHidden && (<Link to="/play" style={{ marginRight: '10px' }} >Поиск игры</Link>)}
-                {!isHidden && (<Link to="/logout">Logout</Link>)}
-                {isHidden && (<Link to="/login">Login</Link>)}
-            </nav>
+    const RootLayout = ({ message, isHidden }) => {
+        return (
+            <>
+                <p>{message}</p>
+                <nav style={{ padding: '20px', background: '#eee' }}>
+                    <Link to="/" style={{ marginRight: '40px' }}>Home</Link>
+                    <Link to="/register" style={{ marginRight: '30px' }}>Register</Link>
 
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/logout" element={<Logout/> }/>
-                <Route path="/play" element={<RegularPlay/> }/>
-            </Routes>
-        </Router>
-    );
+                    {!isHidden && (
+                        <>
+                            <Link to="/user-profile" style={{ marginRight:'20px' }}>Мой профиль</Link>
+                            <Link to="/play" style={{ marginRight: '10px' }}>Поиск игры</Link>
+                            <Link to="/logout">Logout</Link>
+                        </>
+                    )}
+
+                    {isHidden && (
+                        <Link to="/login">Login</Link>
+                    )}
+                </nav>
+
+                {/* Outlet — это место, где будут рендериться ваши страницы (Home, Register и т.д.) */}
+                <Outlet />
+            </>
+        );
+    };
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <RootLayout message={message} isHidden={isHidden} />,
+            children: [
+                {
+                    index: true, // Это путь "/"
+                    element: <Home />,
+                },
+                {
+                    path: "register",
+                    element: <Register />,
+                },
+                {
+                    path: "login",
+                    element: <Login />,
+                },
+                {
+                    path: "logout",
+                    element: <Logout />,
+                },
+                {
+                    path: "play",
+                    element: <RegularPlay />,
+                },
+                {
+                    path: "user-profile",
+                    element: <UserProfile />
+                }
+            ],
+        },
+    ]);
+
+    // 3. Возвращаем RouterProvider с нашим объектом router
+    return <RouterProvider router={router} />;
 }
 
 export default App;

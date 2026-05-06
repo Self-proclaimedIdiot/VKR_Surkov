@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql.TypeMapping;
 using ReactChess.Server.Models;
+using System.Collections.Concurrent;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -17,7 +18,8 @@ namespace ReactChess.Server.Controllers.Servs
         private readonly MatchmakingChannel _pool;
         private readonly ChessContext _context = new ChessContext(new DbContextOptions<ChessContext>());
         private readonly EloHandler elo_handler = new EloHandler();
-        private readonly ChessLogicHandler logic_handler = new ChessLogicHandler(); 
+        private readonly ChessLogicHandler logic_handler = new ChessLogicHandler();
+        private readonly ConnectionsLog connectionsLog = new ConnectionsLog();
         public ChessHub(MatchmakingChannel pool) { _pool = pool; }
         //заход в очередь
         public async Task JoinQueue(int format_n)
@@ -398,6 +400,43 @@ namespace ReactChess.Server.Controllers.Servs
                     new_elo = opponent_new_elo
                 }
             });
+        }
+        public override async Task OnDisconnectedAsync(Exception? exception)
+        {
+            string gameId_s = await connectionsLog.GetGroupId(Context.ConnectionId);
+            if (gameId_s != "NoGroup")
+            {
+                int gameId = Convert.ToInt32(gameId_s);
+                var game = await _context.games.Where(g => g.Id == gameId).FirstOrDefaultAsync();
+                if (game.Status == "Active")
+                {
+                    int playerId = (await _context.players.Where(p => p.AccountId.ToString() == Context.UserIdentifier).FirstOrDefaultAsync()).Id;
+                    int opponentId = game.WhitesId == playerId ? game.BlacksId : game.WhitesId;
+                    string color = game.WhitesId == playerId ? "Black" : "White";
+                    game.Status = $"PlayerLeft {color}";
+                    int old_elo = (await _context.elos.Where(e => e.PlayerId == playerId && e.FormatId == game.FormatId)
+                .FirstOrDefaultAsync()).Number;
+                    int opponent_old_elo = (await _context.elos.Where(e => e.PlayerId == opponentId && e.FormatId == game.FormatId)
+                    .FirstOrDefaultAsync()).Number;
+                    int[] new_elos = await elo_handler.HandleElo(opponentId, playerId, game.FormatId, false);
+                    int new_elo = new_elos[1];
+                    int opponent_new_elo = new_elos[0];
+                    _context.SaveChanges();
+                    await Clients.GroupExcept(gameId.ToString(), Context.ConnectionId).SendAsync("MoveReceived", new
+                    {
+                        FEN = "no_fen",
+                        Status = $"TimesUp {color}",
+                        GameOver = true,
+                        GameOverData = new
+                        {
+                            message = "Противник вышел!",
+                            old_elo = opponent_old_elo,
+                            new_elo = opponent_new_elo
+                        }
+                    });
+                }
+            }
+            await base.OnDisconnectedAsync(exception);
         }
         public override async Task OnConnectedAsync()
         {
