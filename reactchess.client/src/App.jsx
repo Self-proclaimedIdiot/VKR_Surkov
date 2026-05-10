@@ -11,9 +11,13 @@ import Register from './pages/Register.jsx'
 import Login from './pages/Login.jsx'
 import RegularPlay from './pages/RegularPlay.jsx';
 import UserProfile from './pages/UserProfile.jsx';
+import Replay from './pages/Replay.jsx';
+import * as signalR from '@microsoft/signalr';
+import { toast, Toaster } from 'sonner';
+import useSignalStore from './components/useSignalStore.js';
 
 // Заглушки страниц прямо здесь
-const Home = () => <h1>Main</h1>;
+const Home = () => <h1>Main</h1>
 const Logout = () => {
     useEffect(() => {
         sessionStorage.removeItem("token")
@@ -23,6 +27,83 @@ const Logout = () => {
 function App() {
     const [message, SetMessage] = useState('')
     const [isHidden, setIsHidden] = useState(true)
+    const [accountId, setAccountId] = useState(0)
+    const setConnection = useSignalStore((state) => state.setConnection);
+    const connection = useSignalStore((state) => state.connection);
+    useEffect(() => {
+        const token = sessionStorage.getItem('token');
+        if (token != null) {
+            const decoded = jwtDecode(token);
+            setAccountId(decoded.nameid)
+            const newConnection = new signalR.HubConnectionBuilder()
+                .withUrl("https://localhost:7039/common-hub", {
+                    accessTokenFactory: () => {
+                        return sessionStorage.getItem('token');
+                    }
+                })
+                .withAutomaticReconnect()
+                .build();
+            const InsideFunc = async () => {
+                if (newConnection.state == signalR.HubConnectionState.Disconnected) {
+                    newConnection.start()
+                        .then(() => {
+                            console.log('Connected!');
+                            // 2. Входим в "комнату" игры
+                            //connection.invoke("JoinGame", gameId);
+
+                            // 3. Подписываемся на получение ходов
+                            //connection.on("ReceiveMove", (fen, move) => {
+                            //console.log("Получен ход:", move, "Новый FEN:", fen);
+                            // Обновите состояние вашей шахматной доски здесь
+                            //});
+                        })
+                        .catch(e => console.log('Connection failed: ', e));
+                    setConnection(newConnection)
+                    sessionStorage.setItem('common-connection', JSON.stringify(newConnection))
+                }
+            }
+            InsideFunc()
+
+            return () => {
+                if (newConnection) {
+                    newConnection.stop();
+                }
+            };
+        }
+    }, [setConnection]);
+    const AcceptFriendship = (friendId) => {
+        connection.invoke("AcceptFriendshipInvite", Number(friendId))
+    }
+    const DeclineFriendship = (friendId) => {
+        connection.invoke("DeclineFriendshipInvite", Number(friendId))
+    }
+    useEffect(() => {
+        if (connection != null) {
+            const handleFriendshipInviteReceived = (data) => {
+                toast("Запрос в друзья", {
+                    description: "Принять игрока " + data.friendLogin + " в друзья?",
+                    duration: Infinity, // Тост не исчезнет сам, пока пользователь не нажмет
+                    action: {
+                        label: "Принять",
+                        onClick: () => AcceptFriendship(data.friendId)
+                    },
+                    cancel: {
+                        label: "Отклонить",
+                        onClick: () => DeclineFriendship(data.friendId)
+                    },
+                });
+            }
+            const handleMessageReceived = (data) => {
+                toast( data.message);
+            }
+            connection.on("FriendshipInviteReceived", handleFriendshipInviteReceived)
+            connection.on("MessageReceived", handleMessageReceived)
+            return () => {
+                connection.off("FriendshipInviteReceived", handleFriendshipInviteReceived)
+                connection.off("MessageReceived", handleMessageReceived)
+            }
+        }
+    }, [connection])
     useEffect(() => {
         const token = sessionStorage.getItem('token');
         var decoded = ''
@@ -51,7 +132,7 @@ function App() {
 
                     {!isHidden && (
                         <>
-                            <Link to="/user-profile" style={{ marginRight:'20px' }}>Мой профиль</Link>
+                            <Link to={"/user-profile/" + accountId} style={{ marginRight: '20px' }}>Мой профиль</Link>
                             <Link to="/play" style={{ marginRight: '10px' }}>Поиск игры</Link>
                             <Link to="/logout">Logout</Link>
                         </>
@@ -65,7 +146,7 @@ function App() {
                 {/* Outlet — это место, где будут рендериться ваши страницы (Home, Register и т.д.) */}
                 <Outlet />
             </>
-        );
+        )
     };
     const router = createBrowserRouter([
         {
@@ -93,15 +174,24 @@ function App() {
                     element: <RegularPlay />,
                 },
                 {
-                    path: "user-profile",
+                    path: "user-profile/:accountId",
                     element: <UserProfile />
+                },
+                {
+                    path: "replay/:gameId/:accountId",
+                    element: <Replay/>
                 }
             ],
         },
     ]);
 
     // 3. Возвращаем RouterProvider с нашим объектом router
-    return <RouterProvider router={router} />;
+    return (
+        <>
+            <RouterProvider router={router} />;
+            <Toaster position="top-right" richColors closeButton />
+        </>
+    )
 }
 
 export default App;

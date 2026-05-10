@@ -2,12 +2,26 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReactChess.Server.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ReactChess.Server.Controllers
 {
     public class UserProfileModel
     {
+        public int ClientId { get; set; }
         public int AccountId { get; set; }
+    }
+    public class ProfileUpdateModel
+    {
+        public int AccountId { get; set; }
+        public string Login { get; set; }
+        public string Email { get; set; }
+    }
+    public class PasswordUpdateModel
+    {
+        public int AccountId { get; set; }
+        public string OldPassword { get; set; }
+        public string NewPassword { get; set; }
     }
     class FormatNameAndEloNumber
     {
@@ -21,8 +35,8 @@ namespace ReactChess.Server.Controllers
         public string OpponentLogin { get; set; }
         public int OpponentElo { get; set; }
         public string FormatName { get; set; }
+        public string Description { get; set; }
         public string Result { get; set; }
-        public bool isVictory { get; set; }
     }
     [ApiController]
     [Route("user-profile")]
@@ -44,7 +58,12 @@ namespace ReactChess.Server.Controllers
             List<Game> games = _context.games.Where(g => g.BlacksId == player.Id || g.WhitesId == player.Id).ToList();
             string login = account.Login;
             string title = player.Title;
+            string email = account.Email;
             bool isPlaying = false;
+            bool isSubscribed = model.ClientId != model.AccountId &&
+                _context.friendships.Where(f => f.SenderId == model.ClientId && f.RecipientId == model.AccountId).Any();
+            bool isSubscriber = model.ClientId != model.AccountId &&
+                _context.friendships.Where(f => f.RecipientId == model.ClientId && f.SenderId == model.AccountId).Any();
             List<AboutGame> about_games = new List<AboutGame>();
             foreach(Game g in games)
             {
@@ -54,8 +73,19 @@ namespace ReactChess.Server.Controllers
                 Elo opponent_elo = _context.elos.Where(e => e.PlayerId == opponent.Id && e.FormatId == g.FormatId).FirstOrDefault();
                 TimeFormat format = _context.timeFormats.Where(tf => tf.Id == g.FormatId).FirstOrDefault();
                 string[] status_splitted = g.Status.Split(' ');
-                string result = status_splitted[0];
-                bool isVictory = status_splitted[1] == (isWhite ? "White" : "Black");
+                string result = "";
+                string description = status_splitted[0];
+                if(status_splitted.Length == 1)
+                {
+                    if (status_splitted[0] == "Active")
+                        result = "В процессе";
+                    else result = "Ничья";
+                }
+                else
+                {
+                    result = (isWhite && status_splitted[1] == "White" || !isWhite && status_splitted[1] == "Black") ?
+                        "Победа" : "Поражение";
+                }
                 about_games.Add(new AboutGame
                 {
                     Id = g.Id,
@@ -63,8 +93,8 @@ namespace ReactChess.Server.Controllers
                     OpponentLogin = opponent_account.Login,
                     OpponentElo = opponent_elo.Number,
                     FormatName = format.Name,
+                    Description = description,
                     Result = result,
-                    isVictory = isVictory
                 });
                 if(g.Status == "Active")
                     isPlaying = true;
@@ -80,7 +110,48 @@ namespace ReactChess.Server.Controllers
                     EloNumber = e.Number
                 });
             }
-            return Ok(new { login = login, title = title, isPlaying = isPlaying, elos = names_and_nums, games = about_games });
+            return Ok(new { login = login, title = title, email = email, isPlaying = isPlaying, elos = names_and_nums, games = about_games,
+            isSubscribed = isSubscribed, isSubscriber = isSubscriber});
+        }
+        [Authorize]
+        [HttpPost]
+        [Route("post-user-data")]
+        public IActionResult PostUserData([FromBody] ProfileUpdateModel model)
+        {
+            bool isCorrect = false;
+            List<string> problems = new List<string>();
+            if (_context.accounts.Where(a => a.Id != model.AccountId && a.Login == model.Login).Any())
+                problems.Add("Логин занят!");
+            if (_context.accounts.Where(a => a.Id != model.AccountId && a.Email == model.Email).Any())
+                problems.Add("Email занят!");
+            if(problems.Count == 0)
+            {
+                Account account = _context.accounts.Where(a => a.Id == model.AccountId).FirstOrDefault();
+                account.Login = model.Login;
+                account.Email = model.Email;
+                _context.SaveChanges();
+                problems.Add("Данные успешно изменены!");
+                isCorrect = true;
+            }
+            return Ok(new { problems = problems, isCorrect = isCorrect });
+        }
+        [Authorize]
+        [Route("post-user-password")]
+        [HttpPost]
+        public IActionResult PostUserPassword([FromBody] PasswordUpdateModel model)
+        {
+            bool isCorrect = false;
+            List<string> problems = new List<string>();
+            Account account = _context.accounts.Where(a => a.Id == model.AccountId).FirstOrDefault();
+            if (BCrypt.Net.BCrypt.Verify(model.OldPassword, account.Password))
+            {
+                account.Password = BCrypt.Net.BCrypt.HashPassword(model.NewPassword,12);
+                _context.SaveChanges();
+                problems.Add("Пароль успешно изменен!");
+                isCorrect = true;
+            }
+            else problems.Add("Неверный пароль!");
+            return Ok(new { problems = problems, isCorrect = isCorrect });
         }
     }
 }

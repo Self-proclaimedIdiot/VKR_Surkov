@@ -70,6 +70,10 @@ export default defineConfig({
             '^/user-profile': {
                 target,
                 secure: false
+            },
+            '^/replay': {
+                target,
+                secure: false
             }
         },
         port: 5173,

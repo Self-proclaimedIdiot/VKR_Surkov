@@ -7,6 +7,7 @@ import '../App.css';
 const RegularPlay = () => {
     //const [message, setMessage] = useState("")
     const [isHidden, setIsHidden] = useState(true)
+    const [isOpponentFound, setIsOpponentFound] = useState(false)
     const [items, setItems] = useState([])
     const token = sessionStorage.getItem('token');
     const [connection, setConnection] = useState(null);
@@ -14,6 +15,7 @@ const RegularPlay = () => {
     const [gameId, setGameId] = useState(0)
     const [baseTime, setBaseTime] = useState(0)
     const [addTime, setAddTime] = useState(0)
+    const [chosenFormatId, setChosenFormatId] = useState(0)
     useEffect(() => {
         const newConnection = new signalR.HubConnectionBuilder()
             .withUrl("https://localhost:7039/chess-hub", {
@@ -51,10 +53,13 @@ const RegularPlay = () => {
     }, [setConnection]);
     const StartGame = async (formatId, time, addTime) => {
         connection.invoke("JoinQueue", formatId)
+        setIsHidden(false)
+        setIsOpponentFound(false)
         connection.on("GameStarted", (data) => {
-            setIsHidden(false)
+            setIsOpponentFound(true)
             setBaseTime(time)
             setAddTime(addTime)
+            setChosenFormatId(formatId)
             const decoded = jwtDecode(token)
             setColor(data.white == decoded.nameid)
             setGameId(data.gameId)
@@ -81,8 +86,9 @@ const RegularPlay = () => {
                     </li>
                 ))}
             </ul>}
-
-            {!isHidden && <DrawBoard connection={connection} isWhite={color} gameId={gameId} baseTime={baseTime} addTime={addTime} />}
+            {!isHidden && !isOpponentFound && <div>Поиск противника...<img src = "loading.gif"/></div>}
+            {!isHidden && isOpponentFound && <DrawBoard key={gameId} connection={connection} isWhite={color} gameId={gameId} baseTime={baseTime} addTime={addTime}
+                onStartNew={() => StartGame(chosenFormatId, baseTime, addTime)} />}
         </div>
     )
 }

@@ -33,7 +33,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 // Если запрос идет к хабу
                 var path = context.HttpContext.Request.Path;
                 if (!string.IsNullOrEmpty(accessToken) &&
-                    (path.StartsWithSegments("/chess-hub"))) // путь к вашему хабу
+                    (path.StartsWithSegments("/chess-hub") || path.StartsWithSegments("/common-hub"))) // путь к вашему хабу
                 {
                     context.Token = accessToken;
                 }
@@ -79,6 +79,6 @@ app.MapControllers();
 app.MapFallbackToFile("/index.html");
 
 app.MapHub<ChessHub>("/chess-hub");
-
+app.MapHub<CommonHub>("/common-hub");
 
 app.Run();

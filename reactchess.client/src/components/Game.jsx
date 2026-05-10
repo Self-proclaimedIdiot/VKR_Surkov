@@ -135,6 +135,17 @@ class ChessBoard {
     }
     TransformPiece(type, color, dest){
         this.board[dest[0]][dest[1]] = new Piece(type, color)
+        if (this.IsCheck(color) && this.CanMove(this.currentPlayer))
+            return "Check"
+        else if (this.IsCheck(color) && !this.CanMove(this.currentPlayer))
+            return "Checkmate"
+        else if (!this.IsCheck(color) && !this.CanMove(this.currentPlayer))
+            return "Stalemate"
+        else if (this.counerToDraw >= 50)
+            return "Draw50"
+        else if (this.CheckForNoMaterial())
+            return "NoMaterial"
+        else return "MoveDone"
     }
     PawnMoves(piece, loc) {
         let moves = []
@@ -253,7 +264,10 @@ class ChessBoard {
             if (this.board[loc[0]][loc[1] + 1] == null &&
                 this.board[loc[0]][loc[1] + 2] == null &&
                 this.board[loc[0]][loc[1] + 3]?.type == 'r') {
-                const enemyPieces = this.GetAllColorPieces(piece.color == 'w' ? 'b' : 'w')
+                let enemyPieces = this.GetAllColorPieces(piece.color == 'w' ? 'b' : 'w')
+                if (this.castlingRights[piece.color == 'w' ? 'b' : 'w'].kingSide ||
+                    this.castlingRights[piece.color == 'w' ? 'b' : 'w'].queenSide)
+                    enemyPieces = enemyPieces.filter(piece => piece.type != 'k')
                 let pass = true
                 enemyPieces.map((data => {
                     const ePiece = data[0]
@@ -272,7 +286,10 @@ class ChessBoard {
                 this.board[loc[0]][loc[1] - 2] == null &&
                 this.board[loc[0]][loc[1] - 3] == null &&
                 this.board[loc[0]][loc[1] - 4]?.type == 'r') {
-                const enemyPieces = this.GetAllColorPieces(piece.color == 'w' ? 'b' : 'w')
+                let enemyPieces = this.GetAllColorPieces(piece.color == 'w' ? 'b' : 'w')
+                if (this.castlingRights[piece.color == 'w' ? 'b' : 'w'].kingSide ||
+                    this.castlingRights[piece.color == 'w' ? 'b' : 'w'].queenSide)
+                    enemyPieces = enemyPieces.filter(piece => piece.type != 'k')
                 let pass = true
                 enemyPieces.map((data => {
                     const ePiece = data[0]

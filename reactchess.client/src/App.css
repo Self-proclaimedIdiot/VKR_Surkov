@@ -87,6 +87,15 @@
     object-fit: fill; 
     display: block;
 }
+.piece-svg-ours {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+}
+.piece-svg-ours:hover{
+    cursor:pointer;
+}
 .overlay {
     position: fixed;
     top: 0;
@@ -131,11 +140,13 @@
     width: auto;
     max-width: 400px;
     min-width: 200px;
+    max-height: 300px; 
+    overflow-y: auto; 
+    display: block;
     border-collapse: collapse;
     background-color: #ffffff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    overflow: hidden;
     font-family: Arial, sans-serif;
     font-size: 14px;
 }
@@ -167,6 +178,7 @@
 .small-table-right tr:hover {
     background-color: #f0f0f0;
     transition: background-color 0.2s ease;
+    cursor: pointer;
 }
 
 /* Первая колонка (опционально) */
@@ -276,8 +288,7 @@
 }
 
     .player-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        cursor: pointer;
     }
 
 .player-login {
@@ -347,6 +358,7 @@
     border-radius: 12px;
     max-width: 500px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
 }
 .user-nickname {
     font-size: 24px;
@@ -392,7 +404,7 @@
 }
 
 .elo-value {
-    color: #50fa7b;
+    color: #b3fcf9;
     font-weight: bold;
 }
 .games-history {
@@ -400,7 +412,9 @@
     flex-direction: column;
     gap: 8px;
 }
-
+    .games-history :hover {
+        cursor: pointer;
+    }
 .game-row {
     background: rgba(255, 255, 255, 0.05);
     padding: 10px;
@@ -416,18 +430,153 @@
     }
 
 .status-win {
-    color: #50fa7b;
+    color: #5cf2b6;
     font-weight: bold;
 }
 
 .status-loss {
-    color: #ff5555;
+    color: #ed766d;
     font-weight: bold;
 }
-
+.status-draw {
+    color: #f2f27e;
+    font-weight: bold;
+}
+.status-active {
+    color: #6ae2eb;
+    font-weight: bold;
+}
 .opponent {
-    color: #f1fa8c;
+    color: #ffffff;
+    font-weight: bolder;
+}
+.format-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle; /* Чтобы иконка не "прыгала" относительно текста */
+    margin-right: 8px;
+    transition: transform 0.2s ease-in-out, filter 0.2s;
 }
 
+    /* Цвет и свечение для SVG */
+    .format-icon svg {
+        fill: #8be9fd; /* Голубой цвет из палитры */
+        filter: drop-shadow(0 0 2px rgba(139, 233, 253, 0.5));
+    }
+
+/* Эффект при наведении на строку (если иконка внутри .game-row) */
+.game-row:hover .format-icon {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+/* Контейнер для кнопок, если их будет несколько */
+.actions-wrapper {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.user-action-btn {
+    background: transparent;
+    color: #6272a4; /* Сдержанный серо-синий */
+    border: 1px solid #6272a4;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    outline: none;
+}
+
+    /* Эффект при наведении */
+    .user-action-btn:hover {
+        background: #bd93f9;
+        color: #282a36;
+        border-color: #bd93f9;
+        transform: translateY(-1px);
+    }
+
+    /* Эффект при нажатии */
+    .user-action-btn:active {
+        transform: translateY(1px);
+        box-shadow: none;
+    }
+
+.user-input-group {
+    display: flex;
+    align-items: center; /* Центрирует текст и инпут по вертикали */
+    margin-bottom: 15px; /* Отступ между строчками */
+    width: 100%;
+    max-width: 500px; /* Общая ширина блока */
+    margin: 15px 0;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.user-input {
+    background-color: #282a36;
+    color: #f8f8f2;
+    border: 2px solid #44475a;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    flex-grow: 1; /* Инпут растянется на все оставшееся место */
+}
+
+    /* Состояние при клике (фокусе) */
+    .user-input:focus {
+        border-color: #bd93f9; /* Фиолетовый акцент */
+        box-shadow: 0 0 8px rgba(189, 147, 249, 0.3);
+        background-color: #343746; /* Еще чуть светлее при вводе */
+    }
+
+    /* Стиль плейсхолдера */
+    .user-input::placeholder {
+        color: #6272a4;
+        opacity: 0.8;
+    }
+.user-input-error {
+    border-color: red !important;
+    color: #f8f8f2;
+    background-color: #282a36;
+    border: 2px solid #44475a;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    align-self: end
+}
+.user-input-error::placeholder {
+    color: #6272a4;
+    opacity: 0.8;
+}
+/* Если нужно добавить подпись (label) над полем */
+.user-input-label {
+    font-size: 12px;
+    color: #bd93f9;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    margin-left: 4px;
+    width: 200px; /* Фиксированная ширина для всех подписей */
+    flex-shrink: 0;
+}
+.message {
+    color: #f55baf;
+}
+.email {
+    color: #e887f5;
+    font-size: 12px;
+}
 
 

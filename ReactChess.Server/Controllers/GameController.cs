@@ -37,8 +37,12 @@ namespace ReactChess.Server.Controllers
             string opponent_title = opponent.Title;
             Elo opponent_elo = _context.elos.Where(e => e.PlayerId == OpponentId && e.FormatId == game.FormatId).FirstOrDefault();
             int opponent_number = opponent_elo.Number;
+            int opponent_account_id = opponent_account.Id;
+            bool isFriend = _context.friendships.Where(f => f.SenderId == account.Id && f.RecipientId == opponent_account_id).Any() &&
+                _context.friendships.Where(f => f.RecipientId == account.Id && f.SenderId == opponent_account_id).Any();
             return Ok(new {login = login, elo = number, title = title, 
-                opponentLogin = opponent_login, opponentElo = opponent_number, opponentTitle = opponent_title
+                opponentLogin = opponent_login, opponentElo = opponent_number, opponentTitle = opponent_title, 
+                opponentId = opponent_account_id, isFriend = isFriend
             });
         }
     }

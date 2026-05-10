@@ -6,7 +6,13 @@ import ConfirmButton from './ConfirmButton.jsx';
 import { toast, Toaster } from 'sonner';
 import useBeforeUnload from '../components/BeforeUnload.jsx'
 import WarningForm from './WarningForm.jsx';
-const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
+const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime, onStartNew }) => {
+    const token = sessionStorage.getItem('token');
+    const decoded = jwtDecode(token)
+    const accountId = decoded.nameid
+    const navigate = useNavigate();
     const [draggedFigure, setDraggedFigure] = useState({ piece: null, loc: [] })
     const [boardHash, setBoardHash] = useState(0);
     const [moves, setMoves] = useState([])
@@ -37,6 +43,8 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
     const [opponentElo, setOpponentElo] = useState(0)
     const [playerTitle, setPlayerTitle] = useState("")
     const [opponentTitle, setOpponentTitle] = useState("")
+    const [opponentId, setOpponentId] = useState(0)
+    const [isFriend, setIsFriend] = useState(false)
     const [dl, setDl] = useState(0)
     dl
     useBeforeUnload(isDirty)
@@ -110,12 +118,19 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
             DenyMoveBack()
     }
     const TransformPawn = (type, color) => {
-        game.TransformPiece(type, color, transformingPawnLoc)
+        const response = game.TransformPiece(type, color, transformingPawnLoc)
+        setLog(game.WriteToFEN() + " " + response)
+        setIsActive(false)
+        setIsOpponentActive(true)
+        setOpponentEnding(Math.floor(GetTrueTime() / 1000) + opponentSeconds)
+        setSeconds(prev => prev + addTime)
         const newMove = game.GetNotationFromCoords([transformingPawnLoc[0], transformingPawnLoc[1]]) + "=" + type.toUpperCase()
+            + (response == "Check" ? "+" : "")
         const FEN = game.WriteToFEN()
         setMoveHistory(prev => [...prev, [newMove, FEN]])
-        setStatus("MoveDone" + (isWhite ? " White" : " Black"))
-        connection.invoke("SendMove", gameId, FEN, "MoveDone" +
+        setStatus(response + (isWhite ? " White" : " Black"))
+        CheckForMissings()
+        connection.invoke("SendMove", gameId, FEN, response +
             (isWhite ? " White" : " Black"))
     }
     const Concede = () => {
@@ -155,6 +170,9 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
             status == "Check Black") { return "checked" }
         return ""
     }
+    const OpenUserProfile = (accountId) => {
+        navigate(`/user-profile/${accountId}`)
+    }
     const WatchMoveFromHistory = (FEN, isActual) => {
         game.ReadFromFEN(FEN)
         setIsMoveFromHistory(!isActual)
@@ -170,9 +188,11 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
                     className={squareClass}
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={() => RegisterMove(draggedFigure.piece, draggedFigure.loc, [row, column])}>
-                    {game.board[row][column] && (< img src={'/pieces/' + game.board[row][column]?.getSprite()} className="piece-svg"
-                        draggable={(game.board[row][column].color == 'w' && isWhite ||
-                            game.board[row][column].color == 'b' && !isWhite) && !isMoveFromHistory ? "true" : "false"}
+                    {game.board[row][column] && (< img src={'/pieces/' + game.board[row][column]?.getSprite()} className={"piece-svg" +
+                        ((game.board[row][column].color == 'w' && game.currentPlayer == 'w' && isWhite ||
+                            game.board[row][column].color == 'b' && game.currentPlayer == 'b' && !isWhite) && !isMoveFromHistory ? "-ours" : "")} 
+                        draggable={(game.board[row][column].color == 'w' && game.currentPlayer == 'w' && isWhite ||
+                            game.board[row][column].color == 'b' && game.currentPlayer == 'b' && !isWhite) && !isMoveFromHistory ? "true" : "false"}
                         onDragStart={(e) => DragHandle(e, { piece: game.board[row][column], loc: [row, column] })}
                         onDragEnd={() => setMoves([])} />)}
 
@@ -205,6 +225,8 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
                 setOpponentLogin(data.opponentLogin)
                 setOpponentElo(data.opponentElo)
                 setOpponentTitle(data.opponentTitle)
+                setOpponentId(data.opponentId)
+                setIsFriend(data.isFriend)
             })
     }, [])
     useEffect(() => {
@@ -376,7 +398,7 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
     }, [connection, game, moveHistory])
     return (
         <div>
-            <div className="player-card">
+            <div className="player-card" onClick={() => OpenUserProfile(opponentId)}>
                 <span className="player-login">{opponentLogin}</span>
                 <span className="player-elo">{"(" + opponentElo + ")"}</span>
                 {opponentTitle != null && <span>{opponentTitle}</span>}
@@ -452,16 +474,20 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime }) => {
                 })}
                 {advantage > 0 && (<p>+{advantage}</p>)}
             </div>
-            <div className="player-card">
+            <div className="player-card" onClick={() => OpenUserProfile(accountId)}>
                 <span className="player-login">{playerLogin}</span>
                 <span className="player-elo">{"(" + playerElo + ")"}</span>
                 {playerTitle != null && <span>{playerTitle}</span>}
             </div>
-            <WarningForm isDirty={isDirty}></WarningForm>
+            <WarningForm isDirty={isDirty} message="Выход из партии засчитается как автоматическое поражение. Вы действительно хотите выйти?">
+            </WarningForm>
             <GameOverModal isOpen={isModalOpen}
                 message={modalData.message}
                 new_elo={modalData.new_elo}
                 old_elo={modalData.old_elo}
+                onStartNew={() => onStartNew()}
+                opponentId={opponentId}
+                isFriend={isFriend }
                 onClose={() => setIsModalOpen(false)}>
                 <p>игра окончена, это модальное окно... вот</p>
             </GameOverModal>
