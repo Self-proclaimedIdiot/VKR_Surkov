@@ -56,6 +56,9 @@ const UserProfile = () => {
     const OpenGameReplay = (gameId) => {
         navigate(`/replay/${gameId}/${accountId}`)
     }
+    const OpenFriendsList = () => {
+        navigate(`/friends/${accountId}`)
+    }
     const ChangeLoginField = (value) => {
         setLoginChanging(value)
     }
@@ -177,6 +180,9 @@ const UserProfile = () => {
                 {isChanging && < button className="user-action-btn" onClick={() => CancelChanges()}>Отмена</button>}
                 {isPasswordChanging && < button className="user-action-btn" onClick={() => SendPassword()}>Сохранить данные</button>}
                 {isPasswordChanging && < button className="user-action-btn" onClick={() => CancelPasswordChanges()}>Отмена</button>}
+                {!isChanging && !isPasswordChanging && < button className="user-action-btn" onClick={() => OpenFriendsList()}>
+                    Список друзей
+                </button>}
             </div>}
             {!isOwner && <div className="actions-wrapper">
                 {!isSubscribed && !isSubscriber && < button className="user-action-btn" onClick={() => SendFriendshipInvite()}>
@@ -193,6 +199,9 @@ const UserProfile = () => {
                 </button>}
                 < button className="user-action-btn">
                     Пожаловаться
+                </button>
+                < button className="user-action-btn" onClick={() => OpenFriendsList()}>
+                    Список друзей
                 </button>
             </div>}
             {isChanging &&

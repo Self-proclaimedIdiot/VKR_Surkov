@@ -8,7 +8,7 @@ import useBeforeUnload from '../components/BeforeUnload.jsx'
 import WarningForm from './WarningForm.jsx';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
-const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime, onStartNew }) => {
+const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, onStartNew }) => {
     const token = sessionStorage.getItem('token');
     const decoded = jwtDecode(token)
     const accountId = decoded.nameid
@@ -487,6 +487,7 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime, onStartNew 
                 old_elo={modalData.old_elo}
                 onStartNew={() => onStartNew()}
                 opponentId={opponentId}
+                formatId={formatId}
                 isFriend={isFriend }
                 onClose={() => setIsModalOpen(false)}>
                 <p>игра окончена, это модальное окно... вот</p>

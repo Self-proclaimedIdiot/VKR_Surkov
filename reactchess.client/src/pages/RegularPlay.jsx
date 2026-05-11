@@ -88,6 +88,7 @@ const RegularPlay = () => {
             </ul>}
             {!isHidden && !isOpponentFound && <div>Поиск противника...<img src = "loading.gif"/></div>}
             {!isHidden && isOpponentFound && <DrawBoard key={gameId} connection={connection} isWhite={color} gameId={gameId} baseTime={baseTime} addTime={addTime}
+                formatId={chosenFormatId}
                 onStartNew={() => StartGame(chosenFormatId, baseTime, addTime)} />}
         </div>
     )

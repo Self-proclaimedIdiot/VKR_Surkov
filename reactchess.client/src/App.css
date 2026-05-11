@@ -578,5 +578,10 @@
     color: #e887f5;
     font-size: 12px;
 }
-
+.friend-login {
+    font-weight: bolder;
+}
+.friend-login:hover{
+    cursor: pointer;
+}
 

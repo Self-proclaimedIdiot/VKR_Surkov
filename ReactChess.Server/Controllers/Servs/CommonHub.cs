@@ -18,10 +18,31 @@ namespace ReactChess.Server.Controllers.Servs
             var format = await _context.timeFormats.Where(tf => tf.Id == formatId_n).FirstOrDefaultAsync();
             await Clients.User(opponentId).SendAsync("GameInviteReceived", new
             {
+                opponentId = Context.UserIdentifier,
+                formatId = formatId_n,
                 opponentLogin = account.Login,
                 opponentElo = elo.Number,
                 formatName = format.Name
             });
+        }
+        public async Task AcceptGameInvite (int opponentId_n, int formatId_n)
+        {
+            string opponentId = opponentId_n.ToString();
+            await Clients.User(opponentId).SendAsync("StartDuel", new
+            {
+                opponentId = Context.UserIdentifier,
+                formatId = formatId_n,
+            });
+            await Clients.User(Context.UserIdentifier).SendAsync("StartDuel", new
+            {
+                opponentId = opponentId,
+                formatId = formatId_n,
+            });
+        }
+        public async Task DeclineGameInvite(int opponentId_n)
+        {
+            string opponentId = opponentId_n.ToString();
+            await Clients.User(opponentId).SendAsync("MessageReceived", new { message = "Вызоы отклонен!" });
         }
         public async Task SendFriendshipInvite(int recipientId_n)
         {
@@ -61,6 +82,11 @@ namespace ReactChess.Server.Controllers.Servs
         public async Task DeclineFriendshipInvite(int senderId_n)
         {
             string senderId = senderId_n.ToString();
+            int accountId = Convert.ToInt32(Context.UserIdentifier);
+            var friendship = await _context.friendships
+                .Where(f => f.SenderId == senderId_n && f.RecipientId == accountId).FirstOrDefaultAsync();
+            _context.friendships.Remove(friendship);
+            _context.SaveChanges();
             await Clients.User(senderId).SendAsync("MessageReceived", new { message = "Заявка отклонена!" });
         }
         public async Task SendRefuseFriendship(int friend_n)

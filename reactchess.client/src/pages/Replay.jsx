@@ -1,10 +1,10 @@
 ﻿import React, { useState, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import ChessBoard from '../components/Game.jsx';
-import { jwtDecode } from "jwt-decode";
+//import { jwtDecode } from "jwt-decode";
 const Replay = () => {
     const { gameId, accountId } = useParams();
-    const token = sessionStorage.getItem('token');
+    //const token = sessionStorage.getItem('token');
     const [isWhite, setIsWhite] = useState(null)
     const [start, setStart] = useState("")
     const [opponentLogin, setOpponentLogin] = useState("")
@@ -111,7 +111,7 @@ const Replay = () => {
         )
     }
     useEffect(() => {
-        const decoded = jwtDecode(token)
+        //const decoded = jwtDecode(token)
         fetch('/replay/played-game', {
             method: 'POST',
             headers: {

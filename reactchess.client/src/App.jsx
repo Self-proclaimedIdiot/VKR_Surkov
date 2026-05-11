@@ -7,6 +7,7 @@ import {
     Link,
     Outlet
 } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Register from './pages/Register.jsx'
 import Login from './pages/Login.jsx'
 import RegularPlay from './pages/RegularPlay.jsx';
@@ -15,6 +16,8 @@ import Replay from './pages/Replay.jsx';
 import * as signalR from '@microsoft/signalr';
 import { toast, Toaster } from 'sonner';
 import useSignalStore from './components/useSignalStore.js';
+import Friends from './pages/Friends.jsx';
+import DuelPlay from './pages/DuelPlay.jsx';
 
 // Заглушки страниц прямо здесь
 const Home = () => <h1>Main</h1>
@@ -30,6 +33,7 @@ function App() {
     const [accountId, setAccountId] = useState(0)
     const setConnection = useSignalStore((state) => state.setConnection);
     const connection = useSignalStore((state) => state.connection);
+    const navigate = useNavigate()
     useEffect(() => {
         const token = sessionStorage.getItem('token');
         if (token != null) {
@@ -71,6 +75,12 @@ function App() {
             };
         }
     }, [setConnection]);
+    const AcceptGameInvite = (opponentId, formatId) => {
+        connection.invoke("AcceptGameInvite", Number(opponentId), formatId)
+    }
+    const DeclineGameInvite = (opponentId) => {
+        connection.invoke("DeclineGameInvite", Number(opponentId))
+    }
     const AcceptFriendship = (friendId) => {
         connection.invoke("AcceptFriendshipInvite", Number(friendId))
     }
@@ -96,11 +106,33 @@ function App() {
             const handleMessageReceived = (data) => {
                 toast( data.message);
             }
+            const handleGameInviteReceived = (data) => {
+                toast("Брошен вызов!", {
+                    description: "Начать партию с игроком " + data.opponentLogin + " в формате "
+                        + data.formatName + " - рейтинг (" + data.opponentElo + ")",
+                    duration: Infinity, // Тост не исчезнет сам, пока пользователь не нажмет
+                    action: {
+                        label: "Принять",
+                        onClick: () => AcceptGameInvite(data.opponentId, data.formatId)
+                    },
+                    cancel: {
+                        label: "Отклонить",
+                        onClick: () => DeclineGameInvite(data.opponentId)
+                    },
+                });
+            }
+            const handleStartDuel = (data) => {
+                navigate(`/duel/${data.opponentId}/${data.formatId}`)
+            }
             connection.on("FriendshipInviteReceived", handleFriendshipInviteReceived)
             connection.on("MessageReceived", handleMessageReceived)
+            connection.on("GameInviteReceived", handleGameInviteReceived)
+            connection.on("StartDuel", handleStartDuel)
             return () => {
                 connection.off("FriendshipInviteReceived", handleFriendshipInviteReceived)
                 connection.off("MessageReceived", handleMessageReceived)
+                connection.off("GameInviteReceived", handleGameInviteReceived)
+                connection.off("StartDuel", handleStartDuel)
             }
         }
     }, [connection])
@@ -180,7 +212,15 @@ function App() {
                 {
                     path: "replay/:gameId/:accountId",
                     element: <Replay/>
-                }
+                },
+                {
+                    path: "friends/:accountId",
+                    element: <Friends/>
+                },
+                {
+                    path: "duel/:opponentId/:formatId",
+                    element: <DuelPlay/>
+                },
             ],
         },
     ]);

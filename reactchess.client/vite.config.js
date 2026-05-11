@@ -74,6 +74,10 @@ export default defineConfig({
             '^/replay': {
                 target,
                 secure: false
+            },
+            '^/friends': {
+                target,
+                secure: false
             }
         },
         port: 5173,
