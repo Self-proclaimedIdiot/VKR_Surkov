@@ -58,7 +58,8 @@ namespace ReactChess.Server.Controllers
                     isSubscriber = isSubscriber
                 });
             }
-            return Ok(new { friends = about_friends });
+            List<TimeFormat> formats = _context.timeFormats.ToList();
+            return Ok(new { friends = about_friends, formats = formats });
         }
         [Authorize]
         [HttpPost]

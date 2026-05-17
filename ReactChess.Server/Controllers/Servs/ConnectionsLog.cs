@@ -9,9 +9,9 @@ namespace ReactChess.Server.Controllers.Servs
         {
             connections_log.TryAdd(clientId, groupId);
         }
-        public async Task RemoveLog(string clientId)
+        public async Task RemoveLog(string clientId, string groupId)
         {
-            connections_log.Keys.Remove(clientId);
+            connections_log.Remove(clientId, out groupId);
         }
         public async Task<string> GetGroupId(string clientId)
         {

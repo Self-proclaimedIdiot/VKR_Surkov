@@ -8,7 +8,7 @@ import useBeforeUnload from '../components/BeforeUnload.jsx'
 import WarningForm from './WarningForm.jsx';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
-const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, onStartNew }) => {
+const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, isDuel, onStartNew }) => {
     const token = sessionStorage.getItem('token');
     const decoded = jwtDecode(token)
     const accountId = decoded.nameid
@@ -110,7 +110,7 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, on
                 setMoveHistory(prev => [...prev, [newMove, FEN]])
                 setStatus(response + (isWhite ? " White" : " Black"))
                 CheckForMissings()
-                connection.invoke("SendMove", gameId, FEN, response +
+                connection.invoke("SendMove", String(gameId), FEN, response +
                     (isWhite ? " White" : " Black"))
             }
         }
@@ -130,30 +130,30 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, on
         setMoveHistory(prev => [...prev, [newMove, FEN]])
         setStatus(response + (isWhite ? " White" : " Black"))
         CheckForMissings()
-        connection.invoke("SendMove", gameId, FEN, response +
+        connection.invoke("SendMove", String(gameId), FEN, response +
             (isWhite ? " White" : " Black"))
     }
     const Concede = () => {
-        connection.invoke("SendConcede", gameId)
+        connection.invoke("SendConcede", String(gameId))
     }
     const Draw = () => {
-        connection.invoke("AskForDraw", gameId)
+        connection.invoke("AskForDraw", String(gameId))
     }
     const AcceptDraw = () => {
-        connection.invoke("AcceptDraw", gameId)
+        connection.invoke("AcceptDraw", String(gameId))
     }
     const DenyDraw = () => {
-        connection.invoke("DenyDraw", gameId)
+        connection.invoke("DenyDraw", String(gameId))
     }
     const MoveBack = () => {
-        connection.invoke("AskForMoveBack", gameId)
+        connection.invoke("AskForMoveBack", String(gameId))
     }
     const AcceptMoveBack = () => {
-        connection.invoke("AcceptMoveBack", gameId, isWhite ? 'b' : 'w')
+        connection.invoke("AcceptMoveBack", String(gameId), isWhite ? 'b' : 'w')
         setHasMoveBackMessage(false)
     }
     const DenyMoveBack = () => {
-        connection.invoke("DenyMoveBack", gameId)
+        connection.invoke("DenyMoveBack", String(gameId))
         setHasMoveBackMessage(false)
         toast.dismiss()
     }
@@ -210,7 +210,7 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, on
         return Math.floor(Date.now() + Number(offset))
     }
     useEffect(() => {
-        fetch('game/load-players-data', {
+        fetch('/game/load-players-data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -488,7 +488,8 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, on
                 onStartNew={() => onStartNew()}
                 opponentId={opponentId}
                 formatId={formatId}
-                isFriend={isFriend }
+                isFriend={isFriend}
+                isDuel={isDuel }
                 onClose={() => setIsModalOpen(false)}>
                 <p>игра окончена, это модальное окно... вот</p>
             </GameOverModal>

@@ -28,15 +28,50 @@ namespace ReactChess.Server.Controllers.Servs
         public async Task AcceptGameInvite (int opponentId_n, int formatId_n)
         {
             string opponentId = opponentId_n.ToString();
+            int accountId = Convert.ToInt32(Context.UserIdentifier);
+            //var gameId = Guid.NewGuid().ToString();
+            Random random = new Random();
+            int whitesId = 0;
+            int blacksId = 0;
+            int colorIdentifier = random.Next(2);
+            if (colorIdentifier == 0)
+            {
+                whitesId = _context.players.Where(p => p.AccountId == accountId)
+                    .FirstOrDefault().Id;
+                blacksId = _context.players.Where(p => p.AccountId == opponentId_n)
+                    .FirstOrDefault().Id;
+            }
+            else
+            {
+                whitesId = _context.players.Where(p => p.AccountId == opponentId_n)
+                    .FirstOrDefault().Id;
+                blacksId = _context.players.Where(p => p.AccountId == accountId)
+                    .FirstOrDefault().Id;
+            }
+            _context.games.Add(new Game
+            {
+                WhitesId = whitesId,
+                BlacksId = blacksId,
+                FormatId = formatId_n,
+                Status = "Active",
+                StartTime = DateTime.UtcNow
+            });
+            _context.SaveChanges();
+            var game = _context.games.Where(g => g.WhitesId == whitesId &&
+                                              g.BlacksId == blacksId &&
+                                              g.FormatId == formatId_n &&
+                                              g.Status == "Active").FirstOrDefault();
             await Clients.User(opponentId).SendAsync("StartDuel", new
             {
                 opponentId = Context.UserIdentifier,
                 formatId = formatId_n,
+                gameId = game.Id,
             });
             await Clients.User(Context.UserIdentifier).SendAsync("StartDuel", new
             {
                 opponentId = opponentId,
                 formatId = formatId_n,
+                gameId = game.Id,
             });
         }
         public async Task DeclineGameInvite(int opponentId_n)

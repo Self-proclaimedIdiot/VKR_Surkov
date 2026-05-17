@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import useSignalStore from '../components/useSignalStore';
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
+import FormatChoiceButton from '../components/FormatChoiceButton';
 const Friends = () => {
     const connection = useSignalStore((state) => state.connection);
     const { accountId } = useParams();
@@ -12,6 +13,7 @@ const Friends = () => {
     const [friends, setFriends] = useState([])
     const [subscribers, setSubscribers] = useState([])
     const [isOwner, setIsOwner] = useState(false)
+    const [formats, setFormats] = useState([])
     const OpenUserProfile = (Id) => {
         navigate(`/user-profile/${Id}`)
     }
@@ -61,6 +63,7 @@ const Friends = () => {
             .then(response => response.json())
             .then(data => {
                 setFriends(data.friends)
+                setFormats(data.formats)
                 setIsOwner(decoded.nameid == accountId)
             })
     }, [])
@@ -105,16 +108,12 @@ const Friends = () => {
                                 onClick={() => AcceptFriendshipInvite(friend.accountId, friends.indexOf(friend))}>
                                 Принять заявку
                             </button>}
-                            {isOwner && < button className="user-action-btn"
-                            //onClick={() => AcceptFriendshipInvite(friend.Id, friend.indexOf(friend))}
-                            >
-                                Предложить игру
-                            </button>}
+                            {isOwner && <FormatChoiceButton title="Предложить игру" formats={formats} opponentId={friend.accountId}></FormatChoiceButton>}
                         </span>}
                         </div>)
                 })
             }
-            <div>Поступающие заявки в друзья:</div>
+            {isOwner && < div > Поступающие заявки в друзья:</div>}
             {
                 subscribers.map(subscriber => {
                     return (

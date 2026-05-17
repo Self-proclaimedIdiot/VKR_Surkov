@@ -110,8 +110,9 @@ namespace ReactChess.Server.Controllers
                     EloNumber = e.Number
                 });
             }
+            List<TimeFormat> formats = _context.timeFormats.ToList();
             return Ok(new { login = login, title = title, email = email, isPlaying = isPlaying, elos = names_and_nums, games = about_games,
-            isSubscribed = isSubscribed, isSubscriber = isSubscriber});
+            isSubscribed = isSubscribed, isSubscriber = isSubscriber, formats = formats});
         }
         [Authorize]
         [HttpPost]

@@ -78,6 +78,10 @@ export default defineConfig({
             '^/friends': {
                 target,
                 secure: false
+            },
+            '^/duel': {
+                target,
+                secure: false
             }
         },
         port: 5173,

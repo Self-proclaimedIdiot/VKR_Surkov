@@ -52,6 +52,7 @@ const RegularPlay = () => {
         };
     }, [setConnection]);
     const StartGame = async (formatId, time, addTime) => {
+        connection.invoke("ClearLogs");
         connection.invoke("JoinQueue", formatId)
         setIsHidden(false)
         setIsOpponentFound(false)
@@ -88,7 +89,7 @@ const RegularPlay = () => {
             </ul>}
             {!isHidden && !isOpponentFound && <div>Поиск противника...<img src = "loading.gif"/></div>}
             {!isHidden && isOpponentFound && <DrawBoard key={gameId} connection={connection} isWhite={color} gameId={gameId} baseTime={baseTime} addTime={addTime}
-                formatId={chosenFormatId}
+                isDuel={false}  formatId={chosenFormatId}
                 onStartNew={() => StartGame(chosenFormatId, baseTime, addTime)} />}
         </div>
     )

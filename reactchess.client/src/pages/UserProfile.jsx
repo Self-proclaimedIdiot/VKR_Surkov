@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import useBeforeUnload from '../components/BeforeUnload.jsx'
 import WarningForm from '../components/WarningForm.jsx';
 import useSignalStore from '../components/useSignalStore';
+import FormatChoiceButton from '../components/FormatChoiceButton.jsx';
 const UserProfile = () => {
     const connection = useSignalStore((state) => state.connection);
     const { accountId } = useParams();
@@ -28,6 +29,7 @@ const UserProfile = () => {
     const [passwordRepeat, setPasswordRepeat] = useState("")
     const [isPasswordChanging, setIsPasswordChanging] = useState(false)
     const [isPasswordNotSame, setIsPasswordNotSame] = useState(false)
+    const [formats, setFormats] = useState([])
     useBeforeUnload(isChanging || isPasswordChanging)
     const SendFriendshipInvite = () => {
         connection.invoke("SendFriendshipInvite", accountId_n)
@@ -90,7 +92,7 @@ const UserProfile = () => {
     }
     const SendChanges = () => {
         const decoded = jwtDecode(token)
-        fetch('user-profile/post-user-data', {
+        fetch('/user-profile/post-user-data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -111,7 +113,7 @@ const UserProfile = () => {
     const SendPassword = () => {
         if (!isPasswordNotSame) {
             const decoded = jwtDecode(token)
-            fetch('user-profile/post-user-password', {
+            fetch('/user-profile/post-user-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -155,6 +157,7 @@ const UserProfile = () => {
                 setIsOwner(decoded.nameid == accountId)
                 setIsSubscribed(data.isSubscribed)
                 setIsSubscriber(data.isSubscriber)
+                setFormats(data.formats)
             })
     }, [])
     return (
@@ -197,6 +200,10 @@ const UserProfile = () => {
                 {!isSubscribed && isSubscriber && < button className="user-action-btn" onClick={() => AcceptFriendshipInvite()}>
                     Принять заявку
                 </button>}
+                {isSubscribed && isSubscriber && <FormatChoiceButton title="Предложить игру"
+                    formats={formats}
+                    opponentId={accountId_n}
+                ></FormatChoiceButton>}
                 < button className="user-action-btn">
                     Пожаловаться
                 </button>

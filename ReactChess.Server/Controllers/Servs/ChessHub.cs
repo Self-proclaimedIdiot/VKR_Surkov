@@ -20,8 +20,14 @@ namespace ReactChess.Server.Controllers.Servs
         private readonly EloHandler elo_handler = new EloHandler();
         private readonly ChessLogicHandler logic_handler = new ChessLogicHandler();
         private readonly ConnectionsLog connectionsLog = new ConnectionsLog();
+        private readonly ConnectionIdsLog idsLog = new ConnectionIdsLog();
         public ChessHub(MatchmakingChannel pool) { _pool = pool; }
-        //заход в очередь
+        public async Task JoinGroup(int gameId_n)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, gameId_n.ToString());
+            await connectionsLog.AddLog(Context.ConnectionId, gameId_n.ToString());
+        }
+
         public async Task JoinQueue(int format_n)
         {
             string format = format_n.ToString();
@@ -401,6 +407,11 @@ namespace ReactChess.Server.Controllers.Servs
                 }
             });
         }
+        public async Task ClearLogs()
+        {
+            string groupId = await connectionsLog.GetGroupId(Context.ConnectionId);
+            await connectionsLog.RemoveLog(Context.ConnectionId, groupId);
+        }
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
             string gameId_s = await connectionsLog.GetGroupId(Context.ConnectionId);
@@ -435,11 +446,14 @@ namespace ReactChess.Server.Controllers.Servs
                         }
                     });
                 }
+                await connectionsLog.RemoveLog(Context.ConnectionId, gameId_s);
             }
+            await idsLog.RemoveLog(Context.UserIdentifier, Context.ConnectionId);
             await base.OnDisconnectedAsync(exception);
         }
         public override async Task OnConnectedAsync()
         {
+            await idsLog.AddLog(Context.UserIdentifier, Context.ConnectionId);
             Console.WriteLine("Here it is!");
         }
         

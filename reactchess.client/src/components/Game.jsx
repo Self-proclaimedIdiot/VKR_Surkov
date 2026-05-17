@@ -267,7 +267,7 @@ class ChessBoard {
                 let enemyPieces = this.GetAllColorPieces(piece.color == 'w' ? 'b' : 'w')
                 if (this.castlingRights[piece.color == 'w' ? 'b' : 'w'].kingSide ||
                     this.castlingRights[piece.color == 'w' ? 'b' : 'w'].queenSide)
-                    enemyPieces = enemyPieces.filter(piece => piece.type != 'k')
+                    enemyPieces = enemyPieces.filter(filtering => filtering[0].type.toLowerCase() !== 'k')
                 let pass = true
                 enemyPieces.map((data => {
                     const ePiece = data[0]
@@ -289,7 +289,7 @@ class ChessBoard {
                 let enemyPieces = this.GetAllColorPieces(piece.color == 'w' ? 'b' : 'w')
                 if (this.castlingRights[piece.color == 'w' ? 'b' : 'w'].kingSide ||
                     this.castlingRights[piece.color == 'w' ? 'b' : 'w'].queenSide)
-                    enemyPieces = enemyPieces.filter(piece => piece.type != 'k')
+                    enemyPieces = enemyPieces.filter(filtering => filtering[0].type.toLowerCase() !== 'k')
                 let pass = true
                 enemyPieces.map((data => {
                     const ePiece = data[0]
