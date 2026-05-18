@@ -16,7 +16,7 @@ import { toast, Toaster } from 'sonner';
 import useSignalStore from './components/useSignalStore.js';
 import Friends from './pages/Friends.jsx';
 import DuelPlay from './pages/DuelPlay.jsx';
-
+import Select from 'react-select'
 // Заглушки страниц прямо здесь
 const Home = () => <h1>Main</h1>
 const Logout = () => {
@@ -29,10 +29,38 @@ const RootLayout = () =>  {
     const [message, SetMessage] = useState('')
     const [isHidden, setIsHidden] = useState(true)
     const [accountId, setAccountId] = useState(0)
+    const [request, setRequest] = useState("")
+    const [foundUsers, setFoundUsers] = useState([])
+    const [isShowingUsers, setIsShowingUsers] = useState(false)
     const setConnection = useSignalStore((state) => state.setConnection);
     const connection = useSignalStore((state) => state.connection);
     const setChessConnection = useSignalStore((state) => state.setChessConnection);
     const navigate = useNavigate()
+    foundUsers
+    isShowingUsers
+    const OpenFoundUserProfile = (accountId) => {
+        navigate(`/user-profile/${accountId}`)
+    }
+    const SearchPlayer = (request) => {
+        setRequest(request)
+        if (request.length >= 2) {
+            setTimeout(() => {
+                fetch('/user-search/load-users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ Login: request })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        let newFoundUsers = []
+                        data.users.map(user => newFoundUsers.push({ value: user.id, label: user.login }))
+                        setFoundUsers(newFoundUsers)
+                    })
+            }, 250)
+        }
+    }
     useEffect(() => {
         const token = sessionStorage.getItem('token');
         if (token != null) {
@@ -198,6 +226,42 @@ const RootLayout = () =>  {
                             <Link to={"/user-profile/" + accountId} style={{ marginRight: '20px' }}>Мой профиль</Link>
                             <Link to="/play" style={{ marginRight: '10px' }}>Поиск игры</Link>
                             <Link to="/logout">Logout</Link>
+                        <span className="search-wrapper" style={{ position: 'relative', display: 'inline-block' }}> <input
+                            type="text"
+                            value={request}
+                            placeholder="Поиск игрока:"
+                            list="user-list"
+                            className="user-input"
+                            onChange={(e) => {
+                                SearchPlayer(e.target.value)
+                                setIsShowingUsers(true)
+                            }}
+                            onFocus={() => setIsShowingUsers(true)}
+                            onBlur={() => setTimeout(() => setIsShowingUsers(false), 400)}
+                        />
+                            {isShowingUsers  && (
+                                <div className="user-dropdown">
+                                    {foundUsers.length === 0 && request != null && (
+                                        <div className="dropdown-item empty-message">
+                                            Совпадений не найдено
+                                        </div>
+                                    )}
+
+                                    {foundUsers.map((user) => (
+                                        <div
+                                            key={user.value}
+                                            className="dropdown-item"
+                                            onClick={() => {
+                                                OpenFoundUserProfile(user.value);
+                                                setIsShowingUsers(false);
+                                                setRequest("")
+                                            }}
+                                        >
+                                            {user.label}
+                                        </div>
+                                    ))}
+                                    </div>)}
+                        </span>
                         </>
                     )}
 

@@ -159,7 +159,7 @@ const UserProfile = () => {
                 setIsSubscriber(data.isSubscriber)
                 setFormats(data.formats)
             })
-    }, [])
+    }, [accountId])
     return (
         <div className="profile-card">
             <div className="user-nickname">{login}

@@ -571,6 +571,18 @@
     width: 200px; /* Фиксированная ширина для всех подписей */
     flex-shrink: 0;
 }
+.user-select {
+    background-color: #282a36;
+    color: #f8f8f2;
+    border: 2px solid #44475a;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    flex-grow: 1;
+    cursor: pointer;
+}
 .message {
     color: #f55baf;
 }
@@ -584,4 +596,73 @@
 .friend-login:hover{
     cursor: pointer;
 }
+/* 1. Изменяем обертку: теперь она строго по размеру инпута */
+.search-wrapper {
+    position: relative;
+    display: inline-flex; /* inline-flex не дает растягиваться на всю строку */
+    width: fit-content; /* Сжимает контейнер до ширины инпута */
+    /* Если нужно отцентровать сам инпут на странице, раскомментируйте строку ниже: */
+    /* margin: 0 auto; */
+}
+
+/* 2. Сам инпут теперь задает ширину всей конструкции */
+.user-input {
+    background-color: #282a36;
+    color: #f8f8f2;
+    border: 2px solid #44475a;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    /* Задайте инпуту фиксированную ширину, которая вам нужна */
+    width: 280px;
+    box-sizing: border-box;
+}
+
+    /* Состояние при фокусе */
+    .user-input:focus {
+        border-color: #bd93f9;
+        box-shadow: 0 0 8px rgba(189, 147, 249, 0.3);
+        background-color: #343746;
+    }
+
+/* 3. Дропдаун теперь автоматически станет ровно такой же ширины, как инпут */
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%; /* Теперь 100% — это ширина инпута, а не всего экрана */
+    margin-top: 6px;
+    background-color: #282a36;
+    border: 2px solid #44475a;
+    border-radius: 8px;
+    z-index: 1000;
+    max-height: 220px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 8px rgba(189, 147, 249, 0.1);
+}
+
+/* Стили для каждого игрока */
+.dropdown-item {
+    padding: 10px 14px;
+    color: #f8f8f2;
+    font-size: 14px;
+    text-align: left; /* Принудительно выравниваем текст по левому краю */
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+    .dropdown-item:hover {
+        background-color: #343746;
+        color: #bd93f9;
+    }
+
+    .dropdown-item.empty-message {
+        color: #6272a4;
+        cursor: default;
+        font-style: italic;
+        text-align: left;
+    }
 

@@ -82,6 +82,10 @@ export default defineConfig({
             '^/duel': {
                 target,
                 secure: false
+            },
+            '^/user-search': {
+                target,
+                secure: false
             }
         },
         port: 5173,

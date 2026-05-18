@@ -3,44 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\user\\source\\repos\\ReactChess\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\rootlayout.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\pages\\userprofile.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\src\\pages\\userprofile.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|c:\\users\\user\\source\\repos\\reactchess\\reactchess.client\\src\\rootlayout.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\src\\rootlayout.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\controllers\\friendscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\controllers\\friendscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\app.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\src\\app.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\pages\\userprofile.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\src\\pages\\userprofile.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\controllers\\servs\\commonhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\controllers\\servs\\commonhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\formatchoicebutton.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\src\\components\\formatchoicebutton.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\controllers\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\controllers\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|c:\\users\\user\\source\\repos\\reactchess\\reactchess.client\\src\\components\\game.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\src\\components\\game.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\controllers\\servs\\chesshub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\controllers\\servs\\chesshub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\board.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\src\\components\\board.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\models\\chesscontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\models\\chesscontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -51,8 +31,40 @@
       "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\src\\pages\\friends.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\controllers\\friendscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\controllers\\friendscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\controllers\\usersearchcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\controllers\\usersearchcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\models\\chesscontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\models\\chesscontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\reactchess.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\reactchess.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\board.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\src\\components\\board.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\controllers\\servs\\commonhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\controllers\\servs\\commonhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\formatchoicebutton.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\src\\components\\formatchoicebutton.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\game.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\src\\components\\game.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\controllers\\servs\\chesshub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\controllers\\servs\\chesshub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\gameovermodal.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
@@ -115,10 +127,6 @@
       "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\src\\pages\\replay.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\vite.config.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\vite.config.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\controllers\\regularplaycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\controllers\\regularplaycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -133,10 +141,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\pages\\register.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\src\\pages\\register.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\pages\\login.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
@@ -191,10 +195,6 @@
       "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\src\\components\\beforeunload.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.server\\reactchess.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{AA487107-2C07-4A95-87F8-C20EAB044E14}|ReactChess.Server\\ReactChess.Server.csproj|solutionrelative:reactchess.server\\reactchess.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\eslint.config.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{21101CAC-9C13-4B23-8CA8-F5C28F237527}|reactchess.client\\reactchess.client.esproj|solutionrelative:reactchess.client\\eslint.config.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
@@ -234,11 +234,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 34,
               "Title": "Register.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\pages\\Register.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\pages\\Register.jsx",
@@ -251,13 +251,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "UserProfile.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\pages\\UserProfile.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\pages\\UserProfile.jsx",
               "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\pages\\UserProfile.jsx",
               "RelativeToolTip": "reactchess.client\\src\\pages\\UserProfile.jsx",
-              "ViewState": "AQIAAL4AAAAAAAAAAAAAAMwAAAArAAAA",
+              "ViewState": "AQIAAI0AAAAAAAAAAAAAAKEAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
               "WhenOpened": "2026-05-05T13:26:25.798Z",
               "IsPinned": true,
@@ -265,13 +265,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
+              "Title": "UserSearchController.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\UserSearchController.cs",
+              "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\UserSearchController.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\UserSearchController.cs",
+              "RelativeToolTip": "ReactChess.Server\\Controllers\\UserSearchController.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAA1wBgAAABvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T09:58:04.578Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "UserProfileController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\UserProfileController.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\UserProfileController.cs",
               "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\UserProfileController.cs",
               "RelativeToolTip": "ReactChess.Server\\Controllers\\UserProfileController.cs",
-              "ViewState": "AQIAAFgAAAAAAAAAAAAwwHIAAABXAAAA",
+              "ViewState": "AQIAAGkAAAAAAAAAAAAiwDkAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-05T13:47:12.923Z",
               "IsPinned": true,
@@ -279,20 +292,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 6,
               "Title": "Friends.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\pages\\Friends.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\pages\\Friends.jsx",
               "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\pages\\Friends.jsx",
               "RelativeToolTip": "reactchess.client\\src\\pages\\Friends.jsx",
-              "ViewState": "AQIAADMAAAAAAAAAAAAUwEAAAAAQAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABEAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
               "WhenOpened": "2026-05-10T15:47:34.451Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 2,
               "Title": "FriendsController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\FriendsController.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\FriendsController.cs",
@@ -301,17 +314,18 @@
               "ViewState": "AQIAABgAAAAAAAAAAADwvyIAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-10T15:31:00.427Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "App.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\App.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\App.jsx",
               "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\App.jsx",
               "RelativeToolTip": "reactchess.client\\src\\App.jsx",
-              "ViewState": "AQIAADUAAAAAAAAAAAAAwD8AAAAsAAAA",
+              "ViewState": "AQIAACYAAAAAAAAAAAAAwDMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
               "WhenOpened": "2026-02-18T15:11:56.909Z",
               "IsPinned": true,
@@ -319,13 +333,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "RootLayout.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\RootLayout.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\RootLayout.jsx",
               "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\RootLayout.jsx",
               "RelativeToolTip": "reactchess.client\\src\\RootLayout.jsx",
-              "ViewState": "AQIAALcAAAAAAAAAAAAAAM8AAAAXAAAA",
+              "ViewState": "AQIAABoAAAAAAAAAAAAwwCkAAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
               "WhenOpened": "2026-05-11T16:30:43.806Z",
               "IsPinned": true,
@@ -333,7 +347,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 20,
               "Title": "DuelPlay.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\pages\\DuelPlay.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\pages\\DuelPlay.jsx",
@@ -346,7 +360,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 21,
               "Title": "DuelController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\DuelController.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\DuelController.cs",
@@ -359,7 +373,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 22,
               "Title": "RegularPlay.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\pages\\RegularPlay.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\pages\\RegularPlay.jsx",
@@ -372,7 +386,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 30,
               "Title": "Replay.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\pages\\Replay.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\pages\\Replay.jsx",
@@ -385,7 +399,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 32,
               "Title": "ReplayController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\ReplayController.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\ReplayController.cs",
@@ -398,7 +412,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 33,
               "Title": "LoginController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\LoginController.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\LoginController.cs",
@@ -411,7 +425,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "GameOverModal.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\GameOverModal.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\components\\GameOverModal.jsx",
@@ -424,7 +438,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "Login.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\pages\\Login.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\pages\\Login.jsx",
@@ -437,7 +451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 12,
               "Title": "CommonHub.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\Servs\\CommonHub.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\Servs\\CommonHub.cs",
@@ -446,12 +460,11 @@
               "ViewState": "AQIAAAYAAAAAAAAAAAAAABkAAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-09T13:07:27.227Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 15,
               "Title": "ChessHub.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\Servs\\ChessHub.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\Servs\\ChessHub.cs",
@@ -464,20 +477,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "Board.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\Board.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\components\\Board.jsx",
               "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\Board.jsx",
               "RelativeToolTip": "reactchess.client\\src\\components\\Board.jsx",
-              "ViewState": "AQIAAEsAAAAAAAAAAAAAAFMAAAAIAAAA",
+              "ViewState": "AQIAACABAAAAAAAAAAAAAFMAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
               "WhenOpened": "2026-03-17T12:35:10.735Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 14,
               "Title": "Game.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\Game.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\components\\Game.jsx",
@@ -486,12 +499,11 @@
               "ViewState": "AQIAABMBAAAAAAAAAAAUwCMBAABOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
               "WhenOpened": "2026-03-01T16:30:06.229Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 31,
               "Title": "RegularPlayController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\RegularPlayController.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\RegularPlayController.cs",
@@ -504,7 +516,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "RegController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\RegController.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\RegController.cs",
@@ -517,20 +529,21 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 5,
               "Title": "App.css",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\App.css",
               "RelativeDocumentMoniker": "reactchess.client\\src\\App.css",
               "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\App.css",
               "RelativeToolTip": "reactchess.client\\src\\App.css",
-              "ViewState": "AQIAANsBAAAAAAAAAAAAAOIBAAAcAAAA",
+              "ViewState": "AQIAAIICAAAAAAAAAAAgwJoCAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2026-02-22T14:15:44.836Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 27,
               "Title": "MatchmakingChannel.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\Servs\\MatchmakingChannel.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\Servs\\MatchmakingChannel.cs",
@@ -543,7 +556,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "MatchmakingWorker.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\Servs\\MatchmakingWorker.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\Servs\\MatchmakingWorker.cs",
@@ -556,7 +569,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "ChessLogicHandler.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\Servs\\ChessLogicHandler.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\Servs\\ChessLogicHandler.cs",
@@ -569,7 +582,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 42,
               "Title": "TransformationModal.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\TransformationModal.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\components\\TransformationModal.jsx",
@@ -582,7 +595,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "GameController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\GameController.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\GameController.cs",
@@ -595,7 +608,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "WarningForm.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\WarningForm.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\components\\WarningForm.jsx",
@@ -608,7 +621,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 13,
               "Title": "FormatChoiceButton.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\FormatChoiceButton.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\components\\FormatChoiceButton.jsx",
@@ -617,8 +630,7 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
               "WhenOpened": "2026-05-15T09:48:31.212Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -639,18 +651,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 44,
-              "Title": "HelloController.cs",
-              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\HelloController.cs",
-              "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\HelloController.cs",
-              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\HelloController.cs",
-              "RelativeToolTip": "ReactChess.Server\\Controllers\\HelloController.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAA1wBwAAAASAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T15:05:01.262Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 43,
               "Title": "JWTGenerator.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\Servs\\JWTGenerator.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\Servs\\JWTGenerator.cs",
@@ -662,7 +662,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 43,
               "Title": "EloHandler.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\Servs\\EloHandler.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\Servs\\EloHandler.cs",
@@ -692,13 +692,13 @@
               "RelativeDocumentMoniker": "ReactChess.Server\\Models\\ChessContext.cs",
               "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Models\\ChessContext.cs",
               "RelativeToolTip": "ReactChess.Server\\Models\\ChessContext.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAUwBAAAAA4AAAA",
+              "ViewState": "AQIAAAEAAAAAAAAAAADwvw0AAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-21T13:23:09.743Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 23,
               "Title": "index.html",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\index.html",
               "RelativeDocumentMoniker": "reactchess.client\\index.html",
@@ -710,19 +710,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "vite.config.js",
-              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\vite.config.js",
-              "RelativeDocumentMoniker": "reactchess.client\\vite.config.js",
-              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\vite.config.js",
-              "RelativeToolTip": "reactchess.client\\vite.config.js",
-              "ViewState": "AQIAADwAAAAAAAAAAAAAwFEAAAATAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-05-11T17:25:52.047Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "TimeFormat.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Models\\TimeFormat.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Models\\TimeFormat.cs",
@@ -734,91 +722,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Program.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Program.cs",
               "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Program.cs",
               "RelativeToolTip": "ReactChess.Server\\Program.cs",
-              "ViewState": "AQIAAEUAAAAAAAAAAAAowFMAAAAAAAAA",
+              "ViewState": "AQIAAEcAAAAAAAAAAADwv1MAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-18T15:00:12.205Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "ConfirmButton.jsx",
-              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\ConfirmButton.jsx",
-              "RelativeDocumentMoniker": "reactchess.client\\src\\components\\ConfirmButton.jsx",
-              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\ConfirmButton.jsx",
-              "RelativeToolTip": "reactchess.client\\src\\components\\ConfirmButton.jsx",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAAADEAAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2026-04-03T21:25:22.455Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "useSignalStore.js",
-              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\useSignalStore.js",
-              "RelativeDocumentMoniker": "reactchess.client\\src\\components\\useSignalStore.js",
-              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\useSignalStore.js",
-              "RelativeToolTip": "reactchess.client\\src\\components\\useSignalStore.js",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAOAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-05-09T17:18:00.064Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "main.jsx",
-              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\main.jsx",
-              "RelativeDocumentMoniker": "reactchess.client\\src\\main.jsx",
-              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\main.jsx",
-              "RelativeToolTip": "reactchess.client\\src\\main.jsx",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAzAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2026-02-18T15:30:32.414Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "ConnectionIdsLog.cs",
-              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\Servs\\ConnectionIdsLog.cs",
-              "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\Servs\\ConnectionIdsLog.cs",
-              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\Servs\\ConnectionIdsLog.cs",
-              "RelativeToolTip": "ReactChess.Server\\Controllers\\Servs\\ConnectionIdsLog.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAA+AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-11T19:09:14.415Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 45,
-              "Title": "Game.cs",
-              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Models\\Game.cs",
-              "RelativeDocumentMoniker": "ReactChess.Server\\Models\\Game.cs",
-              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Models\\Game.cs",
-              "RelativeToolTip": "ReactChess.Server\\Models\\Game.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAwAAAAlAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-21T16:30:57.918Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 35,
-              "Title": "Friendship.cs",
-              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Models\\Friendship.cs",
-              "RelativeDocumentMoniker": "ReactChess.Server\\Models\\Friendship.cs",
-              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Models\\Friendship.cs",
-              "RelativeToolTip": "ReactChess.Server\\Models\\Friendship.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAA2AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-02T18:31:27.378Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 10,
               "Title": "ReactChess.Server.csproj",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\ReactChess.Server.csproj",
               "RelativeDocumentMoniker": "ReactChess.Server\\ReactChess.Server.csproj",
@@ -830,7 +746,91 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 45,
+              "Title": "HelloController.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\HelloController.cs",
+              "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\HelloController.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\HelloController.cs",
+              "RelativeToolTip": "ReactChess.Server\\Controllers\\HelloController.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAA1wBwAAAASAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-18T15:05:01.262Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ConfirmButton.jsx",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\ConfirmButton.jsx",
+              "RelativeDocumentMoniker": "reactchess.client\\src\\components\\ConfirmButton.jsx",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\ConfirmButton.jsx",
+              "RelativeToolTip": "reactchess.client\\src\\components\\ConfirmButton.jsx",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAADEAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-04-03T21:25:22.455Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "useSignalStore.js",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\useSignalStore.js",
+              "RelativeDocumentMoniker": "reactchess.client\\src\\components\\useSignalStore.js",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\useSignalStore.js",
+              "RelativeToolTip": "reactchess.client\\src\\components\\useSignalStore.js",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-05-09T17:18:00.064Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "main.jsx",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\main.jsx",
+              "RelativeDocumentMoniker": "reactchess.client\\src\\main.jsx",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\main.jsx",
+              "RelativeToolTip": "reactchess.client\\src\\main.jsx",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-02-18T15:30:32.414Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "ConnectionIdsLog.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\Servs\\ConnectionIdsLog.cs",
+              "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\Servs\\ConnectionIdsLog.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\Servs\\ConnectionIdsLog.cs",
+              "RelativeToolTip": "ReactChess.Server\\Controllers\\Servs\\ConnectionIdsLog.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-11T19:09:14.415Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "Game.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Models\\Game.cs",
+              "RelativeDocumentMoniker": "ReactChess.Server\\Models\\Game.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Models\\Game.cs",
+              "RelativeToolTip": "ReactChess.Server\\Models\\Game.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAwAAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-21T16:30:57.918Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "Friendship.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Models\\Friendship.cs",
+              "RelativeDocumentMoniker": "ReactChess.Server\\Models\\Friendship.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Models\\Friendship.cs",
+              "RelativeToolTip": "ReactChess.Server\\Models\\Friendship.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAA2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-02T18:31:27.378Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
               "Title": "Move.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Models\\Move.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Models\\Move.cs",
@@ -842,7 +842,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 41,
               "Title": "index.css",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\index.css",
               "RelativeDocumentMoniker": "reactchess.client\\src\\index.css",
@@ -854,7 +854,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 29,
               "Title": "ConnectionsLog.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\ReactChess.Server\\Controllers\\Servs\\ConnectionsLog.cs",
               "RelativeDocumentMoniker": "ReactChess.Server\\Controllers\\Servs\\ConnectionsLog.cs",
@@ -866,7 +866,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 47,
               "Title": "BeforeUnload.jsx",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\ReactChess\\reactchess.client\\src\\components\\BeforeUnload.jsx",
               "RelativeDocumentMoniker": "reactchess.client\\src\\components\\BeforeUnload.jsx",
