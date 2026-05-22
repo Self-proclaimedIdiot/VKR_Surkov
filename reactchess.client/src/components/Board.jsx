@@ -488,6 +488,7 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, is
                 onStartNew={() => onStartNew()}
                 opponentId={opponentId}
                 formatId={formatId}
+                gameId={gameId}
                 isFriend={isFriend}
                 isDuel={isDuel }
                 onClose={() => setIsModalOpen(false)}>

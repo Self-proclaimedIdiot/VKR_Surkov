@@ -29,6 +29,8 @@ public partial class ChessContext : DbContext
     public virtual DbSet<Tournament> tournaments { get; set; }
     public virtual DbSet<Move> moves { get; set; }
     public virtual DbSet<Friendship> friendships { get; set; }
+    public virtual DbSet<Report> reports { get; set; }
+    public virtual DbSet<TitleRequest> titleRequests { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql("Host=localhost; Port=5432;Database=Chess;Username=postgres;Password=12345678");

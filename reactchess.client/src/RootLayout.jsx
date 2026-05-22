@@ -17,6 +17,7 @@ import useSignalStore from './components/useSignalStore.js';
 import Friends from './pages/Friends.jsx';
 import DuelPlay from './pages/DuelPlay.jsx';
 import Select from 'react-select'
+import BanModal from './components/BanModal.jsx';
 // Заглушки страниц прямо здесь
 const Home = () => <h1>Main</h1>
 const Logout = () => {
@@ -32,6 +33,10 @@ const RootLayout = () =>  {
     const [request, setRequest] = useState("")
     const [foundUsers, setFoundUsers] = useState([])
     const [isShowingUsers, setIsShowingUsers] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [isBanned, setIsBanned] = useState(false)
+    const [unban, setUnban] = useState(0)
+    const [banReason, setBanReason] = useState("")
     const setConnection = useSignalStore((state) => state.setConnection);
     const connection = useSignalStore((state) => state.connection);
     const setChessConnection = useSignalStore((state) => state.setChessConnection);
@@ -211,7 +216,33 @@ const RootLayout = () =>  {
         })
             .then(response => response.json())
             .then(data => SetMessage(data.message + "\n Ты в системе, " + decoded.unique_name))
-            .then(() => setIsHidden(false))
+            .then(() => {
+                setIsHidden(false)
+                setIsAdmin(decoded.role == "Admin")
+            }
+            )
+    }, [])
+    useEffect(() => {
+        const token = sessionStorage.getItem('token');
+        var decoded = ''
+        if (token != null) {
+            decoded = jwtDecode(token);
+        }
+        fetch('reg/check-ban', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // ВОТ ОНО: Передаем токен в стандартном формате Bearer
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ AccountId: decoded.nameid })
+        })
+            .then(response => response.json())
+            .then(data => {
+                setIsBanned(data.isBanned)
+                setUnban(data.unban)
+                setBanReason(data.banReason)
+            })
     }, [])
     return (
         <>
@@ -221,7 +252,7 @@ const RootLayout = () =>  {
                     <Link to="/" style={{ marginRight: '40px' }}>Home</Link>
                     
 
-                    {!isHidden && (
+                    {!isHidden && !isAdmin && (
                         <>
                             <Link to={"/user-profile/" + accountId} style={{ marginRight: '20px' }}>Мой профиль</Link>
                             <Link to="/play" style={{ marginRight: '10px' }}>Поиск игры</Link>
@@ -263,15 +294,58 @@ const RootLayout = () =>  {
                                     </div>)}
                         </span>
                         </>
-                    )}
+                )}
+                {!isHidden && isAdmin && (
+                    <>
+                        <Link to="/reports">Жалобы</Link>
+                        <Link to="/requests">Запросы на титулы</Link>
+                        <Link to="/logout">Logout</Link>
+                        <span className="search-wrapper" style={{ position: 'relative', display: 'inline-block' }}> <input
+                            type="text"
+                            value={request}
+                            placeholder="Поиск игрока:"
+                            list="user-list"
+                            className="user-input"
+                            onChange={(e) => {
+                                SearchPlayer(e.target.value)
+                                setIsShowingUsers(true)
+                            }}
+                            onFocus={() => setIsShowingUsers(true)}
+                            onBlur={() => setTimeout(() => setIsShowingUsers(false), 400)}
+                        />
+                            {isShowingUsers && (
+                                <div className="user-dropdown">
+                                    {foundUsers.length === 0 && request != null && (
+                                        <div className="dropdown-item empty-message">
+                                            Совпадений не найдено
+                                        </div>
+                                    )}
 
+                                    {foundUsers.map((user) => (
+                                        <div
+                                            key={user.value}
+                                            className="dropdown-item"
+                                            onClick={() => {
+                                                OpenFoundUserProfile(user.value);
+                                                setIsShowingUsers(false);
+                                                setRequest("")
+                                            }}
+                                        >
+                                            {user.label}
+                                        </div>
+                                    ))}
+                                </div>)}
+                        </span>
+                    </>
+                )}
                 {isHidden && (
                     <>
                         <Link to="/register" style={{ marginRight: '30px' }}>Register</Link>
                         <Link to="/login">Login</Link>
                     </>
                     )}
-                </nav>
+            </nav>
+            <BanModal isOpen={isBanned} reason={banReason} unban={unban}></BanModal>
                 {/* Outlet — это место, где будут рендериться ваши страницы (Home, Register и т.д.) */}
                 <Outlet />
             </>

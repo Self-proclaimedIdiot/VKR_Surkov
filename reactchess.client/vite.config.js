@@ -86,6 +86,14 @@ export default defineConfig({
             '^/user-search': {
                 target,
                 secure: false
+            },
+            '^/reports': {
+                target,
+                secure: false
+            },
+            '^/requests': {
+                target,
+                secure: false
             }
         },
         port: 5173,

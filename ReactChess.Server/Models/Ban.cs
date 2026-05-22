@@ -9,15 +9,15 @@ public partial class Ban
 {
     public int Id { get; set; }
 
-    public int PlayerId { get; set; }
+    public int AccusedId { get; set; }
 
     public int AdminId { get; set; }
 
     public string Reason { get; set; }
-
+    public DateTime Start {  get; set; }
     public TimeSpan Term { get; set; }
 
     public virtual Account Admin { get; set; }
 
-    public virtual Player Player { get; set; }
+    public virtual Account Accused { get; set; }
 }

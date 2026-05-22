@@ -11,6 +11,15 @@ namespace ReactChess.Server.Controllers
         public int ClientId { get; set; }
         public int AccountId { get; set; }
     }
+    public class TitleModel
+    {
+        public int AccountId { get; set; }
+        public string Title { get; set; }
+    }
+    public class UnbanModel
+    {
+        public int AccusedId { get; set; }
+    }
     public class ProfileUpdateModel
     {
         public int AccountId { get; set; }
@@ -37,6 +46,18 @@ namespace ReactChess.Server.Controllers
         public string FormatName { get; set; }
         public string Description { get; set; }
         public string Result { get; set; }
+    }
+    public class ReportModel
+    {
+        public int ReporterId { get; set; }
+        public int AccusedId { get; set; }
+        public string Text { get; set; }
+    }
+    public class RequestModel
+    {
+        public int PetitionerId { get; set; }
+        public string Title { get; set; }
+        public string Info { get; set; }
     }
     [ApiController]
     [Route("user-profile")]
@@ -111,8 +132,9 @@ namespace ReactChess.Server.Controllers
                 });
             }
             List<TimeFormat> formats = _context.timeFormats.ToList();
+            bool isBanned = _context.bans.Where(b => b.AccusedId == model.AccountId && b.Start + b.Term > DateTime.UtcNow).Any();
             return Ok(new { login = login, title = title, email = email, isPlaying = isPlaying, elos = names_and_nums, games = about_games,
-            isSubscribed = isSubscribed, isSubscriber = isSubscriber, formats = formats});
+            isSubscribed = isSubscribed, isSubscriber = isSubscriber, isBanned = isBanned, formats = formats});
         }
         [Authorize]
         [HttpPost]
@@ -153,6 +175,55 @@ namespace ReactChess.Server.Controllers
             }
             else problems.Add("Неверный пароль!");
             return Ok(new { problems = problems, isCorrect = isCorrect });
+        }
+        [Authorize]
+        [Route("post-report")]
+        [HttpPost]
+        public IActionResult PostReport([FromBody] ReportModel model)
+        {
+            _context.reports.Add(new Report
+            {
+                ReporterId = model.ReporterId,
+                AccusedId = model.AccusedId,
+                Text = model.Text
+            });
+            _context.SaveChanges();
+            return Ok(new {correct = true});
+        }
+        [Authorize]
+        [Route("post-request")]
+        [HttpPost]
+        public IActionResult PostRequest([FromBody] RequestModel model)
+        {
+            _context.titleRequests.Add(new TitleRequest {
+                PetitionerId = model.PetitionerId,
+                Title = model.Title,
+                Info = model.Info
+            });
+            _context.SaveChanges();
+            return Ok(new { correct = true });
+        }
+        [Authorize]
+        [Route("unban-user")]
+        [HttpPost]
+        public IActionResult UnbanUser([FromBody] UnbanModel model)
+        {
+            foreach(Ban ban in _context.bans.Where(b => b.AccusedId == model.AccusedId && b.Start + b.Term > DateTime.UtcNow))
+            {
+                ban.Term = DateTime.UtcNow - ban.Start;
+            }
+            _context.SaveChanges();
+            return Ok(new { correct = true });
+        }
+        [Authorize]
+        [Route("post-title")]
+        [HttpPost]
+        public IActionResult PostTitle([FromBody] TitleModel model)
+        {
+            Player player = _context.players.Where(p => p.AccountId == model.AccountId).FirstOrDefault();
+            player.Title = model.Title == "" ? null : model.Title;
+            _context.SaveChanges();
+            return Ok(new { correct = true });
         }
     }
 }

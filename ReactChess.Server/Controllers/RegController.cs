@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Authorization;
 namespace ReactChess.Server.Controllers
 {
     public enum Level {newbie, amateur, advanced, expert}
+    public class CheckBanModel
+    {
+        public int AccountId { get; set; }
+    }
     public class RegisterModel
     {
         public string Email { get; set; }
@@ -30,9 +34,24 @@ namespace ReactChess.Server.Controllers
         [Route("suka")]
         public IActionResult Get()
         {
-            //return Ok(new IWantToDie { Message = "Hello from ASP.NET!" });
-            //return Json(new { message = "Hello from Register, suka!" });
+            
             return Ok(new {message = "СЕКРЕТНАЯ ИНФОРМАЦИЯ" });
+        }
+        [Authorize]
+        [HttpPost]
+        [Route("check-ban")]
+        public IActionResult CheckBan([FromBody] CheckBanModel data)
+        {
+            Ban ban = _context.bans.Where(b => b.AccusedId == data.AccountId && DateTime.UtcNow < b.Start + b.Term).FirstOrDefault();
+            bool isBanned = ban != null;
+            int unban = 0;
+            string ban_reason = "";
+            if (isBanned)
+            {
+                unban = Convert.ToInt32((ban.Start + ban.Term - new DateTime(1970, 1, 1, 3, 0, 0, 0)).TotalSeconds);
+                ban_reason = ban.Reason;
+            }
+            return Ok(new {isBanned = isBanned, unban = unban, banReason = ban_reason});
         }
         [HttpPost]
         [Route("send")]

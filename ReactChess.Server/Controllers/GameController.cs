@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReactChess.Server.Models;
 namespace ReactChess.Server.Controllers
@@ -7,6 +8,13 @@ namespace ReactChess.Server.Controllers
     {
         public bool IsWhite {  get; set; }
         public int GameId { get; set; }
+    }
+    public class ReportWithGameModel
+    {
+        public int ReporterId { get; set; }
+        public int AccusedId { get; set; }
+        public int GameId { get; set; }
+        public string Text { get; set; }
     }
     [ApiController]
     [Route("game")]
@@ -44,6 +52,21 @@ namespace ReactChess.Server.Controllers
                 opponentLogin = opponent_login, opponentElo = opponent_number, opponentTitle = opponent_title, 
                 opponentId = opponent_account_id, isFriend = isFriend
             });
+        }
+        [HttpPost]
+        [Route("post-report")]
+        [Authorize]
+        public IActionResult PostReport([FromBody] ReportWithGameModel model)
+        {
+            _context.reports.Add(new Report
+            {
+                ReporterId = model.ReporterId,
+                AccusedId = model.AccusedId,
+                GameId = model.GameId,
+                Text = model.Text
+            });
+            _context.SaveChanges();
+            return Ok(new { correct = true });
         }
     }
 }

@@ -17,7 +17,7 @@ public partial class Account
 
     public bool IsAdmin { get; set; }
 
-    public virtual ICollection<Ban> Bans { get; set; } = new List<Ban>();
+    //public virtual ICollection<Ban> Bans { get; set; } = new List<Ban>();
 
     public virtual Player? Player { get; set; }
 }

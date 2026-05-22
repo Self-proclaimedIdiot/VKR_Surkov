@@ -14,6 +14,8 @@ import Replay from './pages/Replay.jsx';
 import Friends from './pages/Friends.jsx';
 import DuelPlay from './pages/DuelPlay.jsx';
 import RootLayout from './RootLayout.jsx';
+import Reports from './pages/Reports.jsx';
+import Requests from './pages/Requests.jsx';
 // Заглушки страниц прямо здесь
 const Home = () => <h1>Main</h1>
 const Logout = () => {
@@ -64,6 +66,14 @@ function App() {
                     path: "duel/:opponentId/:formatId/:gameId",
                     element: <DuelPlay/>
                 },
+                {
+                    path: "reports",
+                    element: <Reports/>
+                },
+                {
+                    path: "requests",
+                    element: <Requests/>
+                }
             ],
         },
     ]);

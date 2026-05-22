@@ -6,6 +6,8 @@ import useBeforeUnload from '../components/BeforeUnload.jsx'
 import WarningForm from '../components/WarningForm.jsx';
 import useSignalStore from '../components/useSignalStore';
 import FormatChoiceButton from '../components/FormatChoiceButton.jsx';
+import BanOptionsButton from '../components/BanOptionsButton';
+import { toast, Toaster } from 'sonner';
 const UserProfile = () => {
     const connection = useSignalStore((state) => state.connection);
     const { accountId } = useParams();
@@ -30,6 +32,15 @@ const UserProfile = () => {
     const [isPasswordChanging, setIsPasswordChanging] = useState(false)
     const [isPasswordNotSame, setIsPasswordNotSame] = useState(false)
     const [formats, setFormats] = useState([])
+    const [isReporting, setIsReporting] = useState(false)
+    const [report, setReport] = useState("")
+    const [isAskingForTitle, setIsAskingForTitle] = useState(false)
+    const [askingTitle, setAskingTitle] = useState("CM")
+    const [askingInfo, setAskingInfo] = useState("")
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [isBanned, setIsBanned] = useState(false)
+    const [isTitleChanging, setIsTitleChanging] = useState(false)
+    const [newTitle, setNewTitle] = useState("")
     useBeforeUnload(isChanging || isPasswordChanging)
     const SendFriendshipInvite = () => {
         connection.invoke("SendFriendshipInvite", accountId_n)
@@ -134,6 +145,87 @@ const UserProfile = () => {
             setFeedback(message)
         }
     }
+    const SendReport = () => {
+        const decoded = jwtDecode(token)
+        fetch('/user-profile/post-report', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ ReporterId: decoded.nameid, AccusedId: accountId_n, Text: report })
+        })
+            .then(response => response.json())
+            .then((data) => {
+                if (data.correct) {
+                    toast("Жалоба отправлена!", {
+                        duration: 2000,
+                    });
+                    setIsReporting(false)
+                }
+            })
+    }
+    const SendRequest = () => {
+        const decoded = jwtDecode(token)
+        fetch('/user-profile/post-request', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ PetitionerId: decoded.nameid, Title: askingTitle, Info: askingInfo})
+        })
+            .then(response => response.json())
+            .then((data) => {
+                if (data.correct) {
+                    toast("Запрос отправлен!", {
+                        duration: 2000,
+                    });
+                    setIsAskingForTitle(false)
+                }
+            })
+    }
+    const SendUnban = () => {
+        fetch('/user-profile/unban-user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ AccusedId: accountId })
+        })
+            .then(response => response.json())
+            .then((data) => {
+                if (data.correct) {
+                    toast("Пользователь разбанен!", {
+                        duration: 2000,
+                    });
+                    setIsBanned(false)
+                }
+            })
+    }
+    const ChangeTitle = () => {
+        fetch('/user-profile/post-title', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ AccountId: accountId_n, Title: newTitle })
+        })
+            .then(response => response.json())
+            .then((data) => {
+                if (data.correct) {
+                    toast("Титул присвоен!", {
+                        duration: 2000,
+                    });
+                    if (newTitle != "")
+                        setTitle(newTitle)
+                    else setTitle(null)
+                    setIsTitleChanging(false)
+                }
+            })
+    }
     useEffect(() => {
         const decoded = jwtDecode(token)
         fetch('/user-profile/load-user-data', {
@@ -148,6 +240,7 @@ const UserProfile = () => {
             .then(data => {
                 setLogin(data.login)
                 setTitle(data.title)
+                setNewTitle(data.title)
                 setEmail(data.email)
                 setElos(data.elos)
                 data.games.reverse()
@@ -157,7 +250,9 @@ const UserProfile = () => {
                 setIsOwner(decoded.nameid == accountId)
                 setIsSubscribed(data.isSubscribed)
                 setIsSubscriber(data.isSubscriber)
+                setIsBanned(data.isBanned)
                 setFormats(data.formats)
+                setIsAdmin(decoded.role == 'Admin')
             })
     }, [accountId])
     return (
@@ -172,22 +267,47 @@ const UserProfile = () => {
                 )
             })}
             {isOwner && < div className="actions-wrapper">
-                {!isChanging && !isPasswordChanging && < button className="user-action-btn" onClick={() => setIsChanging(true)}>
+                {!isChanging && !isPasswordChanging && !isAskingForTitle &&< button className="user-action-btn" onClick={() => setIsChanging(true)}>
                     Изменить данные
                 </button>}
-                {!isChanging && !isPasswordChanging && < button className="user-action-btn" onClick={() => setIsPasswordChanging(true)}>
+                {!isChanging && !isPasswordChanging && !isAskingForTitle && < button className="user-action-btn" onClick={() => setIsPasswordChanging(true)}>
                     Изменить пароль
                 </button>}
-                {!isChanging && !isPasswordChanging && < button className="user-action-btn">Запросить обновление титула</button>}
+                {!isChanging && !isPasswordChanging && !isAskingForTitle && < button className="user-action-btn"
+                    onClick={() => setIsAskingForTitle(true) }
+                >Запросить обновление титула</button>}
                 {isChanging && < button className="user-action-btn" onClick={() => SendChanges()}>Сохранить данные</button>}
                 {isChanging && < button className="user-action-btn" onClick={() => CancelChanges()}>Отмена</button>}
                 {isPasswordChanging && < button className="user-action-btn" onClick={() => SendPassword()}>Сохранить данные</button>}
                 {isPasswordChanging && < button className="user-action-btn" onClick={() => CancelPasswordChanges()}>Отмена</button>}
-                {!isChanging && !isPasswordChanging && < button className="user-action-btn" onClick={() => OpenFriendsList()}>
+                {!isChanging && !isPasswordChanging && !isAskingForTitle && < button className="user-action-btn" onClick={() => OpenFriendsList()}>
                     Список друзей
                 </button>}
+                {isAskingForTitle && < button className="user-action-btn" onClick={() => SendRequest()}>Отправить</button>}
+                {isAskingForTitle && < button className="user-action-btn" onClick={() => setIsAskingForTitle(false)}>Отмена</button>}
+                {isAskingForTitle && < div className="user-input-group">
+                    <span className="user-input-label">
+                        Запрашиваемый титул:
+                        <select value={askingTitle} onChange={(e) => setAskingTitle(e.target.value)}>
+                            <option value="CM">Кандидат в мастера (CM)</option>
+                            <option value="FM">Мастер ФИДЕ (FM)</option>
+                            <option value="IM">Международный мастер (IM)</option>
+                            <option value="GM">Гроссмейстер (GM)</option>
+                        </select>
+                    </span>
+                    <span className="user-input-label">
+                        Дополнительные сведения:
+                        <input
+                            type="text"
+                            value={askingInfo}
+                            className="user-input"
+                            onChange={(e) => { setAskingInfo(e.target.value) }}
+                        />
+                    </span>
+                </div>}
             </div>}
             {!isOwner && <div className="actions-wrapper">
+                {!isReporting && <>
                 {!isSubscribed && !isSubscriber && < button className="user-action-btn" onClick={() => SendFriendshipInvite()}>
                     Добавить в друзья
                 </button>}
@@ -204,12 +324,58 @@ const UserProfile = () => {
                     formats={formats}
                     opponentId={accountId_n}
                 ></FormatChoiceButton>}
-                < button className="user-action-btn">
+                < button className="user-action-btn" onClick={() =>setIsReporting(true)}>
                     Пожаловаться
                 </button>
                 < button className="user-action-btn" onClick={() => OpenFriendsList()}>
                     Список друзей
-                </button>
+                    </button>
+                </>}
+
+                {isReporting && < button className="user-action-btn" onClick={() => SendReport()}>Отправить</button>}
+                {isReporting && < button className="user-action-btn" onClick={() => setIsReporting(false)}>Отмена</button>}
+                {isReporting && < div className="user-input-group">
+                    <span className="user-input-label">
+                        Текст жалобы:
+                        <input
+                            type="text"
+                            value={report}
+                            className="user-input"
+                            onChange={(e) => { setReport(e.target.value) }}
+                        />
+                    </span>
+                </div>}
+            </div>}
+            {!isOwner && isAdmin && <div className="actions-wrapper">
+                {!isBanned && !isTitleChanging && < BanOptionsButton title="Забанить" reportId={0} accusedId={accountId}
+                    onBan={() => setIsBanned(true)}>
+                </BanOptionsButton>}
+                {isBanned && !isTitleChanging && <button className="user-action-btn" onClick={() => SendUnban()}>
+                    Разбанить
+                </button>}
+                {!isTitleChanging && <button className="user-action-btn" onClick={() => setIsTitleChanging(true)}>
+                    Изменить титул
+                </button>}
+                {isTitleChanging && <>
+                    <button className="user-action-btn" onClick={() => ChangeTitle()}>
+                    Применить
+                    </button>
+                    <button className="user-action-btn" onClick={() => setIsTitleChanging(false)}>
+                    Отмена
+                    </button>
+                    < div className="user-input-group">
+                        <span className="user-input-label">
+                            Новый титул:
+                            <select value={newTitle} onChange={(e) => setNewTitle(e.target.value)}>
+                                <option value="">Лишить титулов</option>
+                                <option value="CM">Кандидат в мастера (CM)</option>
+                                <option value="FM">Мастер ФИДЕ (FM)</option>
+                                <option value="IM">Международный мастер (IM)</option>
+                                <option value="GM">Гроссмейстер (GM)</option>
+                            </select>
+                        </span>
+                    </div>
+                </>}
             </div>}
             {isChanging &&
                 <div className="user-input-group">
@@ -284,6 +450,7 @@ const UserProfile = () => {
                     )
                 })}
             </div>
+            <Toaster position="top-right" richColors closeButton />
             <WarningForm isDirty={isChanging || isPasswordChanging} message="Все несохраненные данные будут утеряны! Вы действительно хотите выйти?">
             </WarningForm>
         </div>
