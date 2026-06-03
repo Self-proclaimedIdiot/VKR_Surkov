@@ -21,7 +21,44 @@ namespace ReactChess.Server.Controllers.Servs
         private readonly ChessLogicHandler logic_handler = new ChessLogicHandler();
         private readonly ConnectionsLog connectionsLog = new ConnectionsLog();
         private readonly ConnectionIdsLog idsLog = new ConnectionIdsLog();
-        public ChessHub(MatchmakingChannel pool) { _pool = pool; }
+        private readonly ArenaMatchmakingChannel _arenaPool;
+        public ChessHub(MatchmakingChannel pool, ArenaMatchmakingChannel arenaPool)
+        {
+            _pool = pool;
+            _arenaPool = arenaPool;
+        }
+        public async Task JoinArenaQueue(int tournamentId)
+        {
+            var request = new ArenaSearchRequest(Context.UserIdentifier, Context.ConnectionId, tournamentId);
+            if (!_arenaPool.Writer.TryWrite(request))
+                await Clients.Caller.SendAsync("Error", "Очередь переполнена, попробуйте позже");
+        }
+        // Вызывается после завершения каждой партии — обновляет счёт арены если игра турнирная
+        private void UpdateArenaScore(Game game, int winnerId, int loserId, bool isDraw)
+        {
+            if (!game.TournamentId.HasValue) return;
+            int tournamentId = game.TournamentId.Value;
+            int winnerAccountId = _context.players.FirstOrDefault(p => p.Id == winnerId)?.AccountId ?? 0;
+            int loserAccountId  = _context.players.FirstOrDefault(p => p.Id == loserId)?.AccountId  ?? 0;
+            if (winnerAccountId == 0 || loserAccountId == 0) return;
+            var winnerScore = _context.tournamentArenaScores
+                .FirstOrDefault(s => s.TournamentId == tournamentId && s.AccountId == winnerAccountId);
+            if (winnerScore == null)
+            {
+                winnerScore = new TournamentArenaScore { TournamentId = tournamentId, AccountId = winnerAccountId };
+                _context.tournamentArenaScores.Add(winnerScore);
+            }
+            var loserScore = _context.tournamentArenaScores
+                .FirstOrDefault(s => s.TournamentId == tournamentId && s.AccountId == loserAccountId);
+            if (loserScore == null)
+            {
+                loserScore = new TournamentArenaScore { TournamentId = tournamentId, AccountId = loserAccountId };
+                _context.tournamentArenaScores.Add(loserScore);
+            }
+            if (isDraw) { winnerScore.Draws++; loserScore.Draws++; }
+            else        { winnerScore.Wins++;  loserScore.Losses++; }
+            // SaveChanges вызовет caller сразу после этого метода
+        }
         public async Task JoinGroup(int gameId_n)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, gameId_n.ToString());
@@ -150,6 +187,7 @@ namespace ReactChess.Server.Controllers.Servs
                         message = isDraw ? "Ничья" : "Вы поставили мат!";
                         opponent_message = isDraw ? "Ничья" : "Вам поставили мат!";
                         game_over = true;
+                        UpdateArenaScore(game, isDraw ? playerId : playerId, isDraw ? opponentId : opponentId, isDraw);
                         await Clients.Client(Context.ConnectionId).SendAsync("MoveReceived", new
                         {
                             FEN = FEN,
@@ -181,6 +219,7 @@ namespace ReactChess.Server.Controllers.Servs
                             message = "Ничья! Троекратное повторение позиции";
                             opponent_message = "Ничья! Троекратное повторение позиции";
                             game_over = true;
+                            UpdateArenaScore(game, playerId, opponentId, isDraw: true);
                             await Clients.Client(Context.ConnectionId).SendAsync("MoveReceived", new
                             {
                                 FEN = FEN,
@@ -244,6 +283,7 @@ namespace ReactChess.Server.Controllers.Servs
             int[] new_elos = await elo_handler.HandleElo(opponentId, playerId, game.FormatId, false);
             int new_elo = new_elos[1];
             int opponent_new_elo = new_elos[0];
+            UpdateArenaScore(game, opponentId, playerId, isDraw: false);
             _context.SaveChanges();
             await Clients.Client(Context.ConnectionId).SendAsync("MoveReceived", new
             {
@@ -291,6 +331,7 @@ namespace ReactChess.Server.Controllers.Servs
             int[] new_elos = await elo_handler.HandleElo(opponentId, playerId, game.FormatId, true);
             int new_elo = new_elos[1];
             int opponent_new_elo = new_elos[0];
+            UpdateArenaScore(game, playerId, opponentId, isDraw: true);
             _context.SaveChanges();
             await Clients.Client(Context.ConnectionId).SendAsync("MoveReceived", new
             {
@@ -381,6 +422,7 @@ namespace ReactChess.Server.Controllers.Servs
             int[] new_elos = await elo_handler.HandleElo(opponentId, playerId, game.FormatId, false);
             int new_elo = new_elos[1];
             int opponent_new_elo = new_elos[0];
+            UpdateArenaScore(game, opponentId, playerId, isDraw: false);
             _context.SaveChanges();
             await Clients.Client(Context.ConnectionId).SendAsync("MoveReceived", new
             {
@@ -432,6 +474,7 @@ namespace ReactChess.Server.Controllers.Servs
                     int[] new_elos = await elo_handler.HandleElo(opponentId, playerId, game.FormatId, false);
                     int new_elo = new_elos[1];
                     int opponent_new_elo = new_elos[0];
+                    UpdateArenaScore(game, opponentId, playerId, isDraw: false);
                     _context.SaveChanges();
                     await Clients.GroupExcept(gameId.ToString(), Context.ConnectionId).SendAsync("MoveReceived", new
                     {

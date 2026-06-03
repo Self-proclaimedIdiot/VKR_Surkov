@@ -49,7 +49,6 @@ const DuelPlay = () => {
     }, []);
     return (
         <div>
-            <div>Здесь могла быть игра с {opponentId} в формате {formatId}</div>
             {isLoaded &&  < DrawBoard key={gameId} connection={connection} isWhite={isWhite} gameId={Number(gameId)} baseTime={baseTime} addTime={addTime}
                 isDuel={true}  formatId={Number(formatId)}
                 onStartNew={() => StartGame()} />}

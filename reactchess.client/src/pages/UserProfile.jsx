@@ -256,35 +256,40 @@ const UserProfile = () => {
             })
     }, [accountId])
     return (
-        <div className="profile-card">
-            <div className="user-nickname">{login}
-                {title != null && < span className="user-title">{title}</span >}
-                <span className="email">{email}</span>
-            </div>
+        <div className="page-container">
+            <div className="profile-header">
+            <div>
+                <div className="profile-name">{login}
+                {title != null && < span className="player-title-badge">{title}</span >}
+                </div>
+                <div className="text-muted" style={{ fontSize: '0.85rem', marginTop: 4 }}>
+                    {email}
+                </div>
+          </div>
             {feedback.map(message => {
                 return (
                     <div className="message">{message}</div>
                 )
             })}
-            {isOwner && < div className="actions-wrapper">
-                {!isChanging && !isPasswordChanging && !isAskingForTitle &&< button className="user-action-btn" onClick={() => setIsChanging(true)}>
+                {isOwner && < div className="profile-actions">
+                            {!isChanging && !isPasswordChanging && !isAskingForTitle && < button className="btn btn-secondary" onClick={() => setIsChanging(true)}>
                     Изменить данные
                 </button>}
-                {!isChanging && !isPasswordChanging && !isAskingForTitle && < button className="user-action-btn" onClick={() => setIsPasswordChanging(true)}>
+                            {!isChanging && !isPasswordChanging && !isAskingForTitle && < button className="btn btn-secondary" onClick={() => setIsPasswordChanging(true)}>
                     Изменить пароль
                 </button>}
-                {!isChanging && !isPasswordChanging && !isAskingForTitle && < button className="user-action-btn"
+                            {!isChanging && !isPasswordChanging && !isAskingForTitle && < button className="btn btn-secondary"
                     onClick={() => setIsAskingForTitle(true) }
                 >Запросить обновление титула</button>}
-                {isChanging && < button className="user-action-btn" onClick={() => SendChanges()}>Сохранить данные</button>}
-                {isChanging && < button className="user-action-btn" onClick={() => CancelChanges()}>Отмена</button>}
-                {isPasswordChanging && < button className="user-action-btn" onClick={() => SendPassword()}>Сохранить данные</button>}
-                {isPasswordChanging && < button className="user-action-btn" onClick={() => CancelPasswordChanges()}>Отмена</button>}
-                {!isChanging && !isPasswordChanging && !isAskingForTitle && < button className="user-action-btn" onClick={() => OpenFriendsList()}>
+                            {isChanging && < button className="btn btn-primary" onClick={() => SendChanges()}>Сохранить данные</button>}
+                            {isChanging && < button className="btn btn-danger" onClick={() => CancelChanges()}>Отмена</button>}
+                            {isPasswordChanging && < button className="btn btn-primary" onClick={() => SendPassword()}>Сохранить данные</button>}
+                            {isPasswordChanging && < button className="btn btn-danger" onClick={() => CancelPasswordChanges()}>Отмена</button>}
+                {!isChanging && !isPasswordChanging && !isAskingForTitle && < button className="btn btn-secondary" onClick={() => OpenFriendsList()}>
                     Список друзей
                 </button>}
-                {isAskingForTitle && < button className="user-action-btn" onClick={() => SendRequest()}>Отправить</button>}
-                {isAskingForTitle && < button className="user-action-btn" onClick={() => setIsAskingForTitle(false)}>Отмена</button>}
+                            {isAskingForTitle && < button className="btn btn-primary" onClick={() => SendRequest()}>Отправить</button>}
+                            {isAskingForTitle && < button className="btn btn-danger" onClick={() => setIsAskingForTitle(false)}>Отмена</button>}
                 {isAskingForTitle && < div className="user-input-group">
                     <span className="user-input-label">
                         Запрашиваемый титул:
@@ -295,7 +300,7 @@ const UserProfile = () => {
                             <option value="GM">Гроссмейстер (GM)</option>
                         </select>
                     </span>
-                    <span className="user-input-label">
+                    <div className="user-input-label">
                         Дополнительные сведения:
                         <input
                             type="text"
@@ -303,38 +308,38 @@ const UserProfile = () => {
                             className="user-input"
                             onChange={(e) => { setAskingInfo(e.target.value) }}
                         />
-                    </span>
+                    </div>
                 </div>}
             </div>}
-            {!isOwner && <div className="actions-wrapper">
+                        {!isOwner && <div className="profile-actions">
                 {!isReporting && <>
-                {!isSubscribed && !isSubscriber && < button className="user-action-btn" onClick={() => SendFriendshipInvite()}>
+                                {!isSubscribed && !isSubscriber && < button className="btn btn-secondary" onClick={() => SendFriendshipInvite()}>
                     Добавить в друзья
                 </button>}
-                {isSubscribed && isSubscriber && < button className="user-action-btn" onClick={() => SendRefuseFriendship()}>
+                                {isSubscribed && isSubscriber && < button className="btn btn-secondary" onClick={() => SendRefuseFriendship()}>
                     Удалить из друзей
                 </button>}
-                {isSubscribed && !isSubscriber && < button className="user-action-btn" onClick={() => SendRefuseFriendship()}>
+                                {isSubscribed && !isSubscriber && < button className="btn btn-secondary" onClick={() => SendRefuseFriendship()}>
                     Отозвать заявку
                 </button>}
-                {!isSubscribed && isSubscriber && < button className="user-action-btn" onClick={() => AcceptFriendshipInvite()}>
+                                {!isSubscribed && isSubscriber && < button className="btn btn-secondary" onClick={() => AcceptFriendshipInvite()}>
                     Принять заявку
                 </button>}
                 {isSubscribed && isSubscriber && <FormatChoiceButton title="Предложить игру"
                     formats={formats}
                     opponentId={accountId_n}
                 ></FormatChoiceButton>}
-                < button className="user-action-btn" onClick={() =>setIsReporting(true)}>
+                                < button className="btn btn-secondary" onClick={() =>setIsReporting(true)}>
                     Пожаловаться
                 </button>
-                < button className="user-action-btn" onClick={() => OpenFriendsList()}>
+                                < button className="btn btn-secondary" onClick={() => OpenFriendsList()}>
                     Список друзей
                     </button>
                 </>}
 
-                {isReporting && < button className="user-action-btn" onClick={() => SendReport()}>Отправить</button>}
-                {isReporting && < button className="user-action-btn" onClick={() => setIsReporting(false)}>Отмена</button>}
-                {isReporting && < div className="user-input-group">
+                            {isReporting && < button className="btn btn-primary" onClick={() => SendReport()}>Отправить</button>}
+                            {isReporting && < button className="btn btn-danger" onClick={() => setIsReporting(false)}>Отмена</button>}
+                            {isReporting && < div>
                     <span className="user-input-label">
                         Текст жалобы:
                         <input
@@ -346,21 +351,21 @@ const UserProfile = () => {
                     </span>
                 </div>}
             </div>}
-            {!isOwner && isAdmin && <div className="actions-wrapper">
+                        {!isOwner && isAdmin && <div className="profile-actions">
                 {!isBanned && !isTitleChanging && < BanOptionsButton title="Забанить" reportId={0} accusedId={accountId}
                     onBan={() => setIsBanned(true)}>
                 </BanOptionsButton>}
-                {isBanned && !isTitleChanging && <button className="user-action-btn" onClick={() => SendUnban()}>
+                {isBanned && !isTitleChanging && <button className="btn btn-secondary" onClick={() => SendUnban()}>
                     Разбанить
                 </button>}
-                {!isTitleChanging && <button className="user-action-btn" onClick={() => setIsTitleChanging(true)}>
+                            {!isTitleChanging && <button className="btn btn-secondary" onClick={() => setIsTitleChanging(true)}>
                     Изменить титул
                 </button>}
                 {isTitleChanging && <>
-                    <button className="user-action-btn" onClick={() => ChangeTitle()}>
+                                <button className="btn btn-primary" onClick={() => ChangeTitle()}>
                     Применить
                     </button>
-                    <button className="user-action-btn" onClick={() => setIsTitleChanging(false)}>
+                                <button className="btn btn-danger" onClick={() => setIsTitleChanging(false)}>
                     Отмена
                     </button>
                     < div className="user-input-group">
@@ -427,25 +432,46 @@ const UserProfile = () => {
                             onChange={(e) => { ChangePasswordRepeatField(e.target.value) }}
                         />
                     </span>
-                </div>}
-            <div className="elo-list">
-                {elos.map(elo => { 
-                    return (
-                        <span key={elo.formatName} className="elo-item">
-                            <span ><img className="format-icon" src={"/formats/" + elo.formatName + ".svg"} /></span>
-                            <span className="elo-value">{elo.eloNumber} </span>
-                        </span>
-                    )}
-                )}
+                    </div>}
             </div>
-            <div className="games-history">
+            {/*<div className="elo-list">*/}
+            {/*    {elos.map(elo => { */}
+            {/*        return (*/}
+            {/*            <span key={elo.formatName} className="elo-item">*/}
+            {/*                <span ><img className="format-icon" src={"/formats/" + elo.formatName + ".svg"} /></span>*/}
+            {/*                <span className="elo-value">{elo.eloNumber} </span>*/}
+            {/*            </span>*/}
+            {/*        )}*/}
+            {/*    )}*/}
+                    {/*</div>*/}
+                    <div className="card mb-16">
+                        <table className="elo-table">
+                            <thead>
+                                <tr>
+                                    <th>Формат</th>
+                                    <th>Рейтинг</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {elos.map(e => (
+                                    <tr key={e.formatId}>
+                                        <td>{e.formatName} <img className="format-icon" src={"/formats/" + e.formatName + ".svg"} /> </td>
+                                        <td className="text-gold">{e.eloNumber}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+            <div className="games-list">
                 {games.map(game => {
                     return (
-                        <div key={game.id} className="games-row" onClick={() => OpenGameReplay(game.id)}>
-                            <span ><img className="format-icon" src={"/formats/" + game.formatName + ".svg"} /></span>
-                            <span className = "opponent">{game.opponentLogin}</span>
+                        <div key={game.id} className="game-item" onClick={() => OpenGameReplay(game.id)}>
+                            <span> <img className="format-icon" src={"/formats/" + game.formatName + ".svg"} /></span>
+                            <span className= "game-opponent">{game.opponentLogin}</span>
                             <span>{"(" + game.opponentElo + ")"}</span>
-                            <span className={DefineStyle(game.result)}>{" - " + game.result + "(" + game.description + ")"}</span>
+                            <span className={`game-result-badge ${DefineStyle(game.result)}`}>{" - " + game.result + "(" + game.description + ")"}</span>
+                            <span className="game-date">{game.date}</span>
                         </div>
                     )
                 })}

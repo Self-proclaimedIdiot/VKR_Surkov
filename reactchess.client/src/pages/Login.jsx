@@ -21,25 +21,32 @@ const Login = () => {
     };
     const ToHome = () => { window.location.href = '/'; }
     return (
-        <div>
-            <p>Вход</p>
-            <p>{feedback}</p>
-            <p>Email или логин: <input
+        <div className="auth-page">
+            <div className="auth-card">
+                <h2 className="auth-title">Вход</h2>
+                {feedback && <p className="feedback-message">{feedback}</p>}
+
+                <div className="form-group">
+                    <label>Email или логин:</label>
+                    <input
                 type="text"
                 value={email}
                 onChange={(e) => {setEmail(e.target.value); }}
                 //className={'input-' + (isEmailIncorrect ? 'error' : 'default')}
             />
-            </p>
-            <p>Пароль: <input
+            </div>
+                <div className="form-group">
+                    <label>Пароль: </label>
+                    <input
                  type="password"
                  value={password}
                  onChange={(e) => {setPassword(e.target.value); }}
                 //className={'input-' + (isEmailIncorrect ? 'error' : 'default')}
             />
-            </p>
-            <button onClick={SendData}>Войти</button>
-            <button onClick={ToHome}>На главную</button>
+                </div>
+                <button className= "btn btn-primary w-full" onClick={SendData}>Войти</button>
+                <button className="btn btn-primary w-full" onClick={ToHome}>На главную</button>
+            </div>
         </div>
     );
 }

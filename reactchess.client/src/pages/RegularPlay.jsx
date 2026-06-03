@@ -79,15 +79,22 @@ const RegularPlay = () => {
             .then(data => setItems(data))
     }, [])
     return (
-        <div>
-            {isHidden && <ul>
+        <div className="play-page">
+            <h1 className="page-title">{isHidden ? "Найти партию" : "Партия"}</h1>
+            {isHidden && <div className="format-grid">
                 {items.map((item) => (
-                    <li key={item.id} style={{ marginLeft: 40 }}>
-                        <button onClick={() => StartGame(item.id, item.time, item.addTime)}>{item.name}</button>
-                    </li>
+                    <div key={item.id}
+                        onClick={() => StartGame(item.id, item.time, item.addTime)}
+                        className={`format-card ${chosenFormatId === item.id ? 'selected' : ''}`}>
+                        <div className="format-name">{item.name}</div>
+                        <div className="format-time">{item.time / 60} мин</div>
+                    </div>
                 ))}
-            </ul>}
-            {!isHidden && !isOpponentFound && <div>Поиск противника...<img src = "loading.gif"/></div>}
+            </div>}
+            {!isHidden && !isOpponentFound && <div className="search-status">Поиск противника...
+                <div className="search-spinner">
+                </div>
+            </div>}
             {!isHidden && isOpponentFound && <DrawBoard key={gameId} connection={connection} isWhite={color} gameId={gameId} baseTime={baseTime} addTime={addTime}
                 isDuel={false}  formatId={chosenFormatId}
                 onStartNew={() => StartGame(chosenFormatId, baseTime, addTime)} />}

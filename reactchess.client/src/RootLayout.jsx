@@ -46,6 +46,9 @@ const RootLayout = () =>  {
     const OpenFoundUserProfile = (accountId) => {
         navigate(`/user-profile/${accountId}`)
     }
+    const ToHome = () => {
+        navigate('/')
+    }
     const SearchPlayer = (request) => {
         setRequest(request)
         if (request.length >= 2) {
@@ -206,7 +209,7 @@ const RootLayout = () =>  {
         if (token != null) {
             decoded = jwtDecode(token);
         }
-        fetch('reg/suka', {
+        fetch('reg/test', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -215,7 +218,7 @@ const RootLayout = () =>  {
             }
         })
             .then(response => response.json())
-            .then(data => SetMessage(data.message + "\n Ты в системе, " + decoded.unique_name))
+            .then(() => SetMessage("\n Текущий пользователь: " + decoded.unique_name))
             .then(() => {
                 setIsHidden(false)
                 setIsAdmin(decoded.role == "Admin")
@@ -246,18 +249,19 @@ const RootLayout = () =>  {
     }, [])
     return (
         <>
-                <Toaster position="top-right" richColors closeButton />
-                <p>{message}</p>
-                <nav style={{ padding: '20px', background: '#eee' }}>
-                    <Link to="/" style={{ marginRight: '40px' }}>Home</Link>
-                    
-
+            <Toaster position="top-right" richColors closeButton />
+            <p className="label">{message}</p>
+            <nav className="navbar">
+                <span onClick={() => ToHome()} className="navbar-brand">MaxChess</span>
+                <div className = "navbar links">
                     {!isHidden && !isAdmin && (
                         <>
-                            <Link to={"/user-profile/" + accountId} style={{ marginRight: '20px' }}>Мой профиль</Link>
-                            <Link to="/play" style={{ marginRight: '10px' }}>Поиск игры</Link>
-                            <Link to="/logout">Logout</Link>
-                        <span className="search-wrapper" style={{ position: 'relative', display: 'inline-block' }}> <input
+                            <Link to={"/user-profile/" + accountId} style={{ marginRight: '40px' }}>Мой профиль</Link>
+                            <Link to={"/friends/" + accountId} style={{ marginRight:'30px' }}>Мои друзья</Link>
+                            <Link to="/play" style={{ marginRight: '20px' }}>Поиск игры</Link>
+                            <Link to="/tournaments" style={{ marginRight: '10px' }}>Турниры</Link>
+                            <Link to="/logout">Выйти</Link>
+                        <span className="navbar-search"> <input
                             type="text"
                             value={request}
                             placeholder="Поиск игрока:"
@@ -298,9 +302,10 @@ const RootLayout = () =>  {
                 {!isHidden && isAdmin && (
                     <>
                         <Link to="/reports">Жалобы</Link>
-                        <Link to="/requests">Запросы на титулы</Link>
-                        <Link to="/logout">Logout</Link>
-                        <span className="search-wrapper" style={{ position: 'relative', display: 'inline-block' }}> <input
+                        <Link to="/requests" style={{ marginRight: '10px' }}>Запросы на титулы</Link>
+                            <Link to="/admin/tournaments" style={{ marginRight: '20px' }}>Турниры</Link>
+                            <Link to="/logout" style={{ marginRight: '30px' }}>Выйти</Link>
+                        <span className="navbar-search"> <input
                             type="text"
                             value={request}
                             placeholder="Поиск игрока:"
@@ -340,14 +345,17 @@ const RootLayout = () =>  {
                 )}
                 {isHidden && (
                     <>
-                        <Link to="/register" style={{ marginRight: '30px' }}>Register</Link>
-                        <Link to="/login">Login</Link>
+                        <Link to="/register" style={{ marginRight: '30px' }}>Регстрация</Link>
+                        <Link to="/login">Войти</Link>
                     </>
                     )}
+                </div>
             </nav>
             <BanModal isOpen={isBanned} reason={banReason} unban={unban}></BanModal>
-                {/* Outlet — это место, где будут рендериться ваши страницы (Home, Register и т.д.) */}
+            {/* Outlet — это место, где будут рендериться ваши страницы (Home, Register и т.д.) */}
+            <main className="layout-main">
                 <Outlet />
+            </main>
             </>
         )
 }

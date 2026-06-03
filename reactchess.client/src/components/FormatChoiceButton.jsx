@@ -21,7 +21,7 @@ const FormatChoiceButton = ({ title, formats, opponentId }) => {
 
     return (
         <div>
-            <button className="user-action-btn"  onClick={() => setIsOpen(!isOpen)}>
+            <button className="btn btn-secondary"  onClick={() => setIsOpen(!isOpen)}>
                 {title}
             </button>
 
@@ -30,7 +30,7 @@ const FormatChoiceButton = ({ title, formats, opponentId }) => {
                     position: 'fixed',
                     top: 70,
                     transform: 'translateX(-50%)',
-                    backgroundColor: 'white',
+                    backgroundColor: '#0e0f13',
                     border: '1px solid #ccc',
                     padding: '10px',
                     zIndex: 10,
@@ -41,7 +41,7 @@ const FormatChoiceButton = ({ title, formats, opponentId }) => {
                     <p>Выберите формат</p>
                     {formats.map(format => {
                         return (
-                            <button className= "user-action-btn"onClick={() => StartFormat(format.id)}>
+                            <button className= "btn btn-secondary"onClick={() => StartFormat(format.id)}>
                                 {format.name}
                             </button>
                         )

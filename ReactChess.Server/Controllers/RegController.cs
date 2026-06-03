@@ -31,7 +31,7 @@ namespace ReactChess.Server.Controllers
         }
         [Authorize]
         [HttpGet]
-        [Route("suka")]
+        [Route("test")]
         public IActionResult Get()
         {
             

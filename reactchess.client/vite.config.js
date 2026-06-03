@@ -94,6 +94,14 @@ export default defineConfig({
             '^/requests': {
                 target,
                 secure: false
+            },
+            '^/tournaments': {
+                target,
+                secure: false
+            },
+            '^/tournament': {
+                target,
+                secure: false
             }
         },
         port: 5173,

@@ -59,7 +59,8 @@ namespace ReactChess.Server.Controllers
                 });
             }
             List<TimeFormat> formats = _context.timeFormats.ToList();
-            return Ok(new { friends = about_friends, formats = formats });
+            string login = _context.accounts.Where(a => a.Id == model.AccountId).FirstOrDefault()?.Login;
+            return Ok(new { friends = about_friends, formats = formats, login = login });
         }
         [Authorize]
         [HttpPost]

@@ -16,8 +16,12 @@ import DuelPlay from './pages/DuelPlay.jsx';
 import RootLayout from './RootLayout.jsx';
 import Reports from './pages/Reports.jsx';
 import Requests from './pages/Requests.jsx';
+import Home from './pages/Home.jsx';
+import AdminTournaments from './pages/AdminTournaments.jsx';
+import Tournaments from './pages/Tournaments.jsx';
+import TournamentPage from './pages/TournamentPage.jsx'
+import TournamentArena from './pages/TournamentArena.jsx'
 // Заглушки страниц прямо здесь
-const Home = () => <h1>Main</h1>
 const Logout = () => {
     useEffect(() => {
         sessionStorage.removeItem("token")
@@ -73,7 +77,23 @@ function App() {
                 {
                     path: "requests",
                     element: <Requests/>
-                }
+                },
+                {
+                    path: "tournaments",
+                    element: <Tournaments />
+                },
+                {
+                    path: "tournament/:id",
+                    element: <TournamentPage />
+                },
+                {
+                    path: "tournament/:id/arena",
+                    element: <TournamentArena />
+                },
+                {
+                    path: "admin/tournaments",
+                    element: <AdminTournaments />
+                },
             ],
         },
     ]);
@@ -81,7 +101,7 @@ function App() {
     // 3. Возвращаем RouterProvider с нашим объектом router
     return (
         <>
-            <RouterProvider router={router} />;
+            <RouterProvider router={router} />
         </>
     )
 }

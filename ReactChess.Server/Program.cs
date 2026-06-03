@@ -33,7 +33,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 // Если запрос идет к хабу
                 var path = context.HttpContext.Request.Path;
                 if (!string.IsNullOrEmpty(accessToken) &&
-                    (path.StartsWithSegments("/chess-hub") || path.StartsWithSegments("/common-hub"))) // путь к вашему хабу
+                    (path.StartsWithSegments("/chess-hub") || path.StartsWithSegments("/common-hub") || path.StartsWithSegments("/arena-hub"))) // путь к вашему хабу
                 {
                     context.Token = accessToken;
                 }
@@ -54,6 +54,8 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddSingleton<MatchmakingChannel>();
 builder.Services.AddHostedService<MatchmakingWorker>();
+builder.Services.AddSingleton<ArenaMatchmakingChannel>();
+builder.Services.AddHostedService<ArenaMatchmakingWorker>();
 var app = builder.Build();
 
 app.UseDefaultFiles();
@@ -80,5 +82,5 @@ app.MapFallbackToFile("/index.html");
 
 app.MapHub<ChessHub>("/chess-hub");
 app.MapHub<CommonHub>("/common-hub");
-
+app.MapHub<ArenaHub>("/arena-hub");
 app.Run();

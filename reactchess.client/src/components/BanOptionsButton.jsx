@@ -47,7 +47,7 @@ const BanOptionsButton = ({ title, accusedId, reportId, onBan }) => {
 
     return (
         <div>
-            <button className="user-action-btn" onClick={() => setIsOpen(!isOpen)}>
+            <button className="btn btn-secondary" onClick={() => setIsOpen(!isOpen)}>
                 {title}
             </button>
 
@@ -56,7 +56,7 @@ const BanOptionsButton = ({ title, accusedId, reportId, onBan }) => {
                     position: 'fixed',
                     top: 70,
                     transform: 'translateX(-50%)',
-                    backgroundColor: 'white',
+                    backgroundColor: '#0e0f13',
                     border: '1px solid #ccc',
                     padding: '10px',
                     zIndex: 10,
@@ -82,10 +82,10 @@ const BanOptionsButton = ({ title, accusedId, reportId, onBan }) => {
                             onChange={ChangeTermDays}
                         />
                     </span>
-                    <button onClick={() => SendBan()} >
+                    <button className="btn btn-primary" onClick={() => SendBan()} >
                         Заблокировать
                     </button>
-                    <button onClick={() => setIsOpen(false)}>
+                    <button className="btn btn-danger" onClick={() => setIsOpen(false)}>
                         Отмена
                     </button>
                 </div>

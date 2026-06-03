@@ -14,6 +14,7 @@ const Friends = () => {
     const [subscribers, setSubscribers] = useState([])
     const [isOwner, setIsOwner] = useState(false)
     const [formats, setFormats] = useState([])
+    const [login, setLogin] = useState("")
     const OpenUserProfile = (Id) => {
         navigate(`/user-profile/${Id}`)
     }
@@ -65,6 +66,7 @@ const Friends = () => {
                 setFriends(data.friends)
                 setFormats(data.formats)
                 setIsOwner(decoded.nameid == accountId)
+                setLogin(data.login)
             })
     }, [])
     useEffect(() => {
@@ -85,53 +87,62 @@ const Friends = () => {
         }
     },[isOwner])
     return (
-        <div>
+        <div className="page-container">
+            <h1 className="page-title">Друзья {login}</h1>
+            <div className="friends-list">
             {
                 friends.map(friend => {
                     const decoded = jwtDecode(token)
-                    return (<div>
-                        <span className = "friend-login" onClick={() => OpenUserProfile(friend.accountId)}>{friend.login}</span>
-                        {friend.accountId != decoded.nameid && < span  > 
-                            {!friend.isSubscribed && !friend.isSubscriber && < button className="user-action-btn"
+                    return (<div className = "friend-item">
+                        <span className="friend-name" onClick={() => OpenUserProfile(friend.accountId)}>{friend.login}</span>
+                        {friend.accountId != decoded.nameid && < div className="friend-actions"  > 
+                            {!friend.isSubscribed && !friend.isSubscriber && < button className="btn btn-secondary btn-sm"
                                 onClick={() => SendFriendshipInvite(friend.accountId, friends.indexOf(friend))}>
                                 Добавить в друзья
                             </button>}
-                            {friend.isSubscribed && friend.isSubscriber && < button className="user-action-btn"
+                            {friend.isSubscribed && friend.isSubscriber && < button className="btn btn-secondary btn-sm"
                                 onClick={() => SendRefuseFriendship(friend.accountId, friends.indexOf(friend))}>
                                 Удалить из друзей
                             </button>}
-                            {friend.isSubscribed && !friend.isSubscriber && < button className="user-action-btn"
+                            {friend.isSubscribed && !friend.isSubscriber && < button className="btn btn-secondary btn-sm"
                                 onClick={() => SendRefuseFriendship(friend.accountId, friends.indexOf(friend))}>
                                 Отозвать заявку
                             </button>}
-                            {!friend.isSubscribed && friend.isSubscriber && < button className="user-action-btn"
+                            {!friend.isSubscribed && friend.isSubscriber && < button className="btn btn-secondary btn-sm"
                                 onClick={() => AcceptFriendshipInvite(friend.accountId, friends.indexOf(friend))}>
                                 Принять заявку
                             </button>}
                             {isOwner && <FormatChoiceButton title="Предложить игру" formats={formats} opponentId={friend.accountId}></FormatChoiceButton>}
-                        </span>}
+                        </div>}
                         </div>)
                 })
-            }
-            {isOwner && < div > Поступающие заявки в друзья:</div>}
-            {
+                }
+            </div>
+            {isOwner && subscribers.length > 0 &&
+                <>
+                < div > Поступающие заявки в друзья:</div>
+                <div className="friends-list">
+                {
                 subscribers.map(subscriber => {
                     return (
-                        <div>
-                            <span className="friend-login" onClick={() => OpenUserProfile(subscriber.accountId)}>{subscriber.login}</span>
-                            < span  >
-                                < button className="user-action-btn"
+                        <div className="friend-item">
+                            <span className="friend-name" onClick={() => OpenUserProfile(subscriber.accountId)}>{subscriber.login}</span>
+                            < div className ="friend-actions"  >
+                                < button className="btn btn-secondary btn-sm"
                                     onClick={() => AcceptFriendshipInviteForSubscriber(subscriber.accountId, subscribers.indexOf(subscriber))}>
                                     Принять заявку
                                 </button>
-                                < button className="user-action-btn"
+                                < button className="btn btn-secondary btn-sm"
                                     onClick={() => SendDeclineFriendshipInvite(subscriber.accountId, subscribers.indexOf(subscriber))}>
                                     Отклонить заявку
                                 </button>
-                            </span>
+                            </div>
                         </div>
                     )
                 })
+                    }
+                </div>
+            </>
             }
         </div>
     )

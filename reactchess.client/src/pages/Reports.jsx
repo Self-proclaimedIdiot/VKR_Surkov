@@ -51,22 +51,28 @@ const Reports = () => {
             })
     }, [])
     return (
-        <div>
+        <div className="page-container">
+            <div className="reports-list">
             {
                 reports.map(report => {
                     return (
-                        <div>
-                            <span onClick={() => OpenUserProfile(report.accusedId)}>{report.accusedLogin} </span> обвиняется в
-                            <span> {report.text} </span> жалобу прислал:
-                            <span onClick={() => OpenUserProfile(report.reporterId)}>{report.reporterLogin}</span>
-                            <BanOptionsButton title="Заблокировать" accusedId={report.accusedId} reportId={report.id} onBan={() => RemoveReport(report.id)}>
+                        <div className="report-card">
+                            <div className = "report-header">
+                                <span onClick={() => OpenUserProfile(report.reporterId)}>{report.reporterLogin}</span>  → 
+                                <span onClick={() => OpenUserProfile(report.accusedId)}>{report.accusedLogin} </span>
+                            </div>
+                            <p className="report-text"> {report.text} </p>
+                            <div className="report-actions">
+                            <BanOptionsButton title="Забанить" accusedId={report.accusedId} reportId={report.id} onBan={() => RemoveReport(report.id)}>
                             </BanOptionsButton>
-                            <button className="user-action-btn" onClick={() => DeclineReport(report.id)}>Отклонить</button>
+                            <button className="btn btn-secondary btn-sm" onClick={() => DeclineReport(report.id)}>Отклонить</button>
                             {report.gameId != 0 &&
-                                < button className="user-action-btn" onClick={() => OpenGameReplay(report.gameId, report.accusedId)} >Открыть партию</button>}
+                            < button className="btn btn-secondary btn-sm" onClick={() => OpenGameReplay(report.gameId, report.accusedId)} >Открыть партию</button>}
+                            </div>
                         </div>
                 ) })
-            }
+                }
+            </div>
         </div>
     )
 }

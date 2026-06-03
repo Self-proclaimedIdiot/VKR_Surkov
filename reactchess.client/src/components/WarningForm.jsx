@@ -12,10 +12,10 @@ function WarningForm({ isDirty, message }) {
         <div className="overlay">
             <div className="modal" onClick={(e) => e.stopPropagation()}>
             {blocker.state === "blocked" ? (
-                <div className="modal">
+                    <div className="modal">
                         <p>{message}</p>
-                    <button onClick={() => blocker.proceed()}>Да</button>
-                    <button onClick={() => blocker.reset()}>Нет, остаться</button>
+                            <button onClick={() => blocker.proceed()}>Да</button>
+                            <button onClick={() => blocker.reset()}>Нет, остаться</button>
                 </div>
                 ) : null}
             </div>

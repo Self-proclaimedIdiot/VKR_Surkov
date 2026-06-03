@@ -46,6 +46,7 @@ namespace ReactChess.Server.Controllers
         public string FormatName { get; set; }
         public string Description { get; set; }
         public string Result { get; set; }
+        public DateTime Date { get; set; }
     }
     public class ReportModel
     {
@@ -68,6 +69,30 @@ namespace ReactChess.Server.Controllers
         public UserProfileController(IConfiguration configuration)
         {
             _configuration = configuration;
+        }
+        private string ConvertDescription(string description)
+        {
+            switch (description)
+            {
+                case "Draw":
+                    return "Ничья по согласию";
+                case "Stalemate":
+                    return "Пат";
+                case "Draw50":
+                    return "Правило 50 ходов";
+                case "NoMaterial":
+                    return "Нехватка материала";
+                case "Checkmate":
+                    return "Мат";
+                case "Concede":
+                    return "Сдача";
+                case "PlayerLeft":
+                    return "Игрок вышел";
+                case "TimesUp":
+                    return "Время вышло";
+                default:
+                    return description;
+            }
         }
         [Authorize]
         [HttpPost]
@@ -114,8 +139,9 @@ namespace ReactChess.Server.Controllers
                     OpponentLogin = opponent_account.Login,
                     OpponentElo = opponent_elo.Number,
                     FormatName = format.Name,
-                    Description = description,
+                    Description = ConvertDescription(description),
                     Result = result,
+                    Date = g.StartTime
                 });
                 if(g.Status == "Active")
                     isPlaying = true;

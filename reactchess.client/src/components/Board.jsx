@@ -45,8 +45,10 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, is
     const [opponentTitle, setOpponentTitle] = useState("")
     const [opponentId, setOpponentId] = useState(0)
     const [isFriend, setIsFriend] = useState(false)
+    const [isOver, setIsOver] = useState(false)
     const [dl, setDl] = useState(0)
     dl
+    log
     useBeforeUnload(isDirty)
     const game = useMemo(() => {
         const instance = new ChessBoard()
@@ -230,12 +232,18 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, is
             })
     }, [])
     useEffect(() => {
+        if (isModalOpen) {
+            setIsDirty(false)
+            setIsOver(true)
+        }
+    }, [isModalOpen])
+    useEffect(() => {
         let interval = null;
 
         // Переводим всё в одну систему (мс) для расчетов
         const endingMs = ending * 1000;
 
-        if (isActive && GetTrueTime() < endingMs) {
+        if (isActive && !isOver && GetTrueTime() < endingMs) {
             interval = setInterval(() => {
                 const now = GetTrueTime();
                 const diff = endingMs - now;
@@ -261,14 +269,14 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, is
         }
 
         return () => clearInterval(interval);
-    }, [isActive, ending]); // seconds здесь нет — и это победа
+    }, [isActive, ending, isOver]); // seconds здесь нет — и это победа
     useEffect(() => {
         let interval = null;
 
         // Переводим всё в одну систему (мс) для расчетов
         const endingMs = opponentEnding * 1000;
 
-        if (isOpponentActive && GetTrueTime() < endingMs) {
+        if (isOpponentActive && !isOver && GetTrueTime() < endingMs) {
             interval = setInterval(() => {
                 const now = GetTrueTime();
                 const diff = endingMs - now;
@@ -292,11 +300,7 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, is
         }
 
         return () => clearInterval(interval);
-    }, [isOpponentActive, opponentEnding]); // seconds здесь нет — и это победа
-    useEffect(() => {
-        if (isModalOpen)
-            setIsDirty(false)
-    }, [isModalOpen])
+    }, [isOpponentActive, opponentEnding, isOver]); // seconds здесь нет — и это победа
     useEffect(() => {
         const handleMoveReceived = (data) => {
             if (data.status == "MoveBack") {
@@ -397,13 +401,22 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, is
         };
     }, [connection, game, moveHistory])
     return (
-        <div>
-            <div className="player-card" onClick={() => OpenUserProfile(opponentId)}>
-                <span className="player-login">{opponentLogin}</span>
-                <span className="player-elo">{"(" + opponentElo + ")"}</span>
-                {opponentTitle != null && <span>{opponentTitle}</span>}
-            </div>
-            <div className="eaten-pieces-container">
+        <div className="board-wrapper">
+            <div className="game-panel">
+                <div className={`player-info ${isOpponentActive ? 'active-player' : ''}`} onClick={() => OpenUserProfile(opponentId)}>
+                    <div>
+                        <div className="player-name">
+                            {opponentTitle && <span className="player-title-badge">{opponentTitle}</span>}
+                            {opponentLogin}
+                        </div>
+                        <div className="player-elo">{opponentElo}</div>
+                    </div>
+                    <div className={`chess-timer ${opponentSeconds < 30 ? 'timer-warning' : ''}`}>
+                        {ConvertSeconds(opponentSeconds)}
+                    </div>
+                </div>
+                {missingPieces.length > 0 &&
+                <div className="captured-pieces">
                 {missingPieces.map(piece => {
                     return (
                         <span key={missingPieces.indexOf(piece)}>
@@ -412,8 +425,7 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, is
                     )
                 })}
                 {advantage < 0 && (<p>+{-advantage}</p>)}
-            </div>
-            {log}
+                </div>}
             <table className="small-table-right">
                 <thead>
                     <tr>
@@ -445,7 +457,7 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, is
                 </tbody>
             </table>
             <Toaster position="top-right" richColors closeButton />
-            <div className="board" key={boardHash}>
+                <div className="board" key={boardHash}>
                 {game.board.map((row, rowIndex) => (
                     <div key={rowIndex} className="row">
                         {row.map((_, colIndex) => RenderSquare(isWhite ? rowIndex : 7 - rowIndex,
@@ -453,31 +465,39 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, is
                     </div>
                 ))}
             </div>
-            <div className="chess-opponent-timer">
-                <span className="time-display">{ConvertSeconds(opponentSeconds)}</span>
-            </div>
-            <div className="chess-timer">
-                <span className="time-display">{ConvertSeconds(seconds)}</span>
-            </div>
-            <div className = "fixed-container">
+            {/*<div className="chess-opponent-timer">*/}
+            {/*    <span className="time-display">{ConvertSeconds(opponentSeconds)}</span>*/}
+            {/*</div>*/}
+            {/*<div className="chess-timer">*/}
+            {/*    <span className="time-display">{ConvertSeconds(seconds)}</span>*/}
+            {/*</div>*/}
+                <div className= "game-actions">
             <ConfirmButton onConfirm={() => Concede()} title="Сдаться" />
             <ConfirmButton onConfirm={() => Draw()} title="Предложить ничью" />
                 <ConfirmButton onConfirm={() => MoveBack()} title="Вернуть ход" />
-            </div>
-            <div className="eaten-pieces-container">
-                {opponentMissingPieces.map(piece => {
-                    return(
-                        <span key={opponentMissingPieces.indexOf(piece)}>
-                            <img src={'/pieces/' + piece.getSprite()} />
-                        </span>
-                    )
-                })}
-                {advantage > 0 && (<p>+{advantage}</p>)}
-            </div>
-            <div className="player-card" onClick={() => OpenUserProfile(accountId)}>
-                <span className="player-login">{playerLogin}</span>
-                <span className="player-elo">{"(" + playerElo + ")"}</span>
-                {playerTitle != null && <span>{playerTitle}</span>}
+                </div>
+                {opponentMissingPieces.length > 0 &&
+                    <div className="captured-pieces">
+                        {opponentMissingPieces.map(piece => {
+                            return (
+                                <span key={opponentMissingPieces.indexOf(piece)}>
+                                    <img src={'/pieces/' + piece.getSprite()} />
+                                </span>
+                            )
+                        })}
+                        {advantage > 0 && (<p>+{advantage}</p>)}
+                    </div>}
+                <div className={`player-info ${isActive ? 'active-player' : ''}`} onClick={() => OpenUserProfile(accountId)}>
+                    <div>
+                        <div className="player-name">
+                            {playerTitle && <span className="player-title-badge">{playerTitle}</span>}
+                            {playerLogin}
+                        </div>
+                        <div className="player-elo">{playerElo}</div>
+                    </div>
+                    <div className={`chess-timer ${seconds < 30 ? 'timer-warning' : ''}`}>
+                        {ConvertSeconds(seconds)}
+                    </div>
             </div>
             <WarningForm isDirty={isDirty} message="Выход из партии засчитается как автоматическое поражение. Вы действительно хотите выйти?">
             </WarningForm>
@@ -499,7 +519,8 @@ const DrawBoard = ({ connection, isWhite, gameId, baseTime, addTime,formatId, is
                 onClose={() => setIsTranformModalOpen(false)}
                 onSelect={(type, color) => TransformPawn(type, color)}
             >
-            </TrasformationModal>
+                </TrasformationModal>
+            </div>
         </div>
     )
 }

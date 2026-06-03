@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ReactChess.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f417567c9a81ab5598c7d6743d940f62040a9e48")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a6856d920bd1f2d19c3f3af11c4f2266996528f6")]
 [assembly: System.Reflection.AssemblyProductAttribute("ReactChess.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ReactChess.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

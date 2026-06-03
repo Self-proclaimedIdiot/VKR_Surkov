@@ -172,15 +172,15 @@ const Replay = () => {
                 </div>
             ))}
         </div>
-        <div className="chess-opponent-timer">
+        <div className="chess-timer">
             <span className="time-display">{ConvertSeconds(opponentSeconds)}</span>
         </div>
         <div className="chess-timer">
             <span className="time-display">{ConvertSeconds(seconds)}</span>
         </div>
         <div>
-            <button onClick={() => PreviousMove()}>Назад</button>
-            <button onClick={() => NextMove()}>Вперед</button></div>
+            <button className= "btn btn-secondary btn-sm" onClick={() => PreviousMove()}>Назад</button>
+            <button className="btn btn-secondary btn-sm" onClick={() => NextMove()}>Вперед</button></div>
     </div>)
 }
 export default Replay

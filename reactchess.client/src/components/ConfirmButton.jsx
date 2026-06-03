@@ -21,7 +21,7 @@ const ConfirmButton = ({ onConfirm, title }) => {
 
     return (
         <div>
-            <button onClick={() => setIsOpen(!isOpen)}>
+            <button className="btn btn-secondary btn-sm" onClick={() => setIsOpen(!isOpen)}>
                 {title}
             </button>
 
@@ -30,7 +30,8 @@ const ConfirmButton = ({ onConfirm, title }) => {
                     position: 'fixed',
                     top: 70,
                     transform: 'translateX(-50%)',
-                    backgroundColor: 'white',
+                    backgroundColor: '#0e0f13',
+                    color: 'ffffff',
                     border: '1px solid #ccc',
                     padding: '10px',
                     zIndex: 10,
@@ -39,8 +40,8 @@ const ConfirmButton = ({ onConfirm, title }) => {
                     minWidth: '150px'
                 }}>
                     <p>Вы уверены?</p>
-                    <button onClick={handleConfirm} style={{ color: 'red' }}>Да</button>
-                    <button onClick={() => setIsOpen(false)}>Нет</button>
+                    <button className="btn btn-secondary btn-sm"onClick={handleConfirm}>Да</button>
+                    <button className="btn btn-primary btn-sm" onClick={() => setIsOpen(false)}>Нет</button>
                 </div>
             )}
         </div>

@@ -51,49 +51,56 @@ const Register = () => {
         }
     };
     return (
-        <div>
-            <p>Добро пожаловать на поле регистрации!</p>
-            <p>{feedback}</p>
-            <p>Адрес электронной почты: <input
+        <div className="auth-page">
+            <div className="auth-card">
+                <h2 className="auth-title">Регистрация</h2>
+                {feedback && <p className="feedback-message">{feedback}</p>}
+                <div className="form-group">
+                <label>Адрес электронной почты:</label> <input
                 type="text"
                 value={email}
                 onChange={(e) => { EmailChange(e.target.value); }}
                 placeholder="например vasya.pupkin@mail.ru"
                 className={'input-' + (isEmailIncorrect ? 'error' : 'default')}
             />
-            </p> 
-            <p>Логин: <input
+            </div> 
+                <div className="form-group">
+                    <label>Логин:</label>
+                    <input
                 type="text"
                 value={login}
                 onChange={(e) => { LoginChange(e.target.value); }}
                 placeholder="например AnatolyKarpoff"
                 className={'input-' + (isLoginIncorrect ? 'error' : 'default')}
             />
-            </p>
-            <p>Придумайте пароль: <input
+            </div>
+                <div className="form-group">
+                <label>Придумайте пароль:</label> <input
                 type="password"
                 value={password}
                 onChange={(e) => { PasswordChange(e.target.value); }}
                 placeholder=""
                 className={'input-' + (isPasswordIncorrect ? 'error' : 'default')}
             />
-            </p>
-            <p>Пароль еще раз: <input
+            </div>
+                <div className="form-group">
+                <label>Пароль еще раз: </label><input
                 type="password"
                 value={confirmpassword}
                 onChange={(e) => { ConfirmPasswordChange(e.target.value); }}
                 placeholder=""
                 className={'input-' + (isPasswordNotSimilar ? 'error' : 'default')}
             />
-            </p>
-            <p>
+            </div>
+                <div className="form-group">
                 Выберите уровень игры:
-                <button onClick={() => { setLevel(0) }}>Новичок</button>
-                <button onClick={() => { setLevel(1) }}>Любитель</button>
-                <button onClick={() => { setLevel(2) }}>Продвинутый</button>
-                <button onClick={() => { setLevel(3) }}>Эксперт</button>
-            </p>
-            <button onClick={SendData}>Отправить</button> 
+                    <button className="btn btn-secondary w-full"onClick={() => { setLevel(0) }}>Новичок</button>
+                    <button className="btn btn-secondary w-full" onClick={() => { setLevel(1) }}>Любитель</button>
+                    <button className="btn btn-secondary w-full" onClick={() => { setLevel(2) }}>Продвинутый</button>
+                    <button className="btn btn-secondary w-full" onClick={() => { setLevel(3) }}>Эксперт</button>
+            </div>
+                <button className="btn btn-primary w-full" onClick={SendData}>Отправить</button> 
+            </div>
         </div>
     );
 }

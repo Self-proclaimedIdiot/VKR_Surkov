@@ -42,16 +42,19 @@ const GameOverModal = ({ isOpen, message, old_elo, new_elo, onStartNew, opponent
             <div className="modal" onClick={(e) => e.stopPropagation()}>
                 {!isReporting && <>
                     <h2>{message}</h2>
-                    <h2>{new_elo + "(" + (new_elo - old_elo > 0 ? "+" : "") + (new_elo - old_elo) + ")"}</h2>
-                    <button onClick={() => { onStartNew(); onClose(); }}>Новая игра</button>
-                    {!isDuel && <button onClick={() => GameInvite()}>Реванш</button>}
-                    {!isFriend && <button onClick={() => FriendshipInvite()}>Добавить в друзья</button>}
-                    <button onClick={() => setIsReporting(true)}>Пожаловаться</button>
-                    <button onClick={onClose}>Закрыть</button>
+                    <h2 className="text-gold">{new_elo + "(" + (new_elo - old_elo > 0 ? "+" : "") + (new_elo - old_elo) + ")"}</h2>
+                    <div className="modal-actions">
+                        <button className="btn btn-primary" onClick={() => { onStartNew(); onClose(); }}>Новая игра</button>
+                        {!isDuel && <button onClick={() => GameInvite()}>Реванш</button>}
+                        {!isFriend && <button className="btn btn-secondary" onClick={() => FriendshipInvite()}>Добавить в друзья</button>}
+                        <button className="btn btn-secondary"onClick={() => setIsReporting(true)}>Пожаловаться</button>
+                        <button className="btn btn-danger"onClick={onClose}>Закрыть</button>
+                    </div>
                 </>}
-                {isReporting && < button className="user-action-btn" onClick={() => SendReport()}>Отправить</button>}
-                {isReporting && < button className="user-action-btn" onClick={() => setIsReporting(false)}>Отмена</button>}
-                {isReporting && < div className="user-input-group">
+                {isReporting && <div className = "modal-actions">
+                 < button className="user-action-btn" onClick={() => SendReport()}>Отправить</button>
+                 < button className="user-action-btn" onClick={() => setIsReporting(false)}>Отмена</button>
+                 < div className="user-input-group">
                     <span className="user-input-label">
                         Текст жалобы:
                         <input
@@ -61,7 +64,8 @@ const GameOverModal = ({ isOpen, message, old_elo, new_elo, onStartNew, opponent
                             onChange={(e) => { setReport(e.target.value) }}
                         />
                     </span>
-                </div>}
+                    </div>
+                  </div>}
             </div>
         </div>,
         document.body // Рендерим прямо в body

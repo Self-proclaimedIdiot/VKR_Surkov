@@ -65,14 +65,21 @@ const Requests = () => {
             })
     }, [])
     return (
-        <div>
-            {requests.map(request => {
-                return (<div>
-                    <span onClick={() => OpenUserProfile(request.petitionerId)}>{request.petitionerLogin}</span>  {"(" + request.petitionerElo + ") просит присвоить титул " + request.title + " по основанию: " + request.info}
-                    <button onClick={() => SendTitle(request.id, request.petitionerId, request.valueTitle)}>Присвоить</button>
-                    <button onClick={() => DeclineRequest(request.id)}>Отклонить</button>
+        <div className="page-container">
+            <div className="reports-list">
+                {requests.map(request => {
+                    return (<div className="report-card">
+                        <div className = "report=header">
+                            <span onClick={() => OpenUserProfile(request.petitionerId)}>{request.petitionerLogin}</span>  {"(" + request.petitionerElo + ") просит присвоить титул " + request.title + " по основанию: "}
+                            <p className="report-text">{request.info}</p>
+                        </div>
+                        <div className="report-actions">
+                            <button className= "btn btn-secondary"onClick={() => SendTitle(request.id, request.petitionerId, request.valueTitle)}>Присвоить</button>
+                            <button className="btn btn-secondary" onClick={() => DeclineRequest(request.id)}>Отклонить</button>
+                        </div>
                 </div>)
             })}
+            </div>
         </div>
     )
 }
